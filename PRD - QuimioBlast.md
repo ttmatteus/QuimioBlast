@@ -17,7 +17,7 @@ Tabela dos requisitos funcionais
 | 04 | PV/HP | O jogador, e os inimigos, terão pontos de vida (PV/HP) que ao serem levados a 0 ou menos ocasionam em morte, para o jogador, fim de jogo e exibição da tela de morte. |
 | 05 | Ataque | O jogador poderá atacar os inimigos para diminuir seus PV’s, causando dano, consequentemente matando-os. O ataque poderá sofrer alterações a critério da sua árvore de poderes ou itens. |
 | 06 | Interação com NPC’s | O jogador poderá interagir com a NPC ALI ao se aproximar dela e clicar na tecla “E”, assim obtendo diálogos da NPC. |
-| 07 | Árvore de poderes | Ao passar de algumas salas, o jogador poderá receber um novo poder de acordo com sua árvore de poderes. Não será possível desfazer uma escolha já feita. |
+| 07 | Skills | Ao passar de algumas salas, o jogador poderá receber um novo poder. Não será possível desfazer uma escolha já feita. |
 | 08 | Coleta de itens | Ao estar próximo de itens coletáveis e clicar na tecla “E”, o jogador os obterá, adicionando-os ao seu inventário. |
 | 09 | Inventário | O jogador possuirá um inventário, espaço para armazenamento de itens coletáveis ao longo do jogo, totalizando 5 espaços em seu inventário. |
 | 10 | Usar itens | O jogador poderá clicar com o mouse em itens de seu inventário para usá-los, os removendo de seu inventário após isso. |
@@ -42,10 +42,6 @@ Tabela dos requisitos não funcionais
 | 03 | Plataforma mínima | O jogo deve, no mínimo rodar em computadores windows 10 |
 | 04 | Separação de telas | O jogo deve ter uma boa separação de suas telas. |
 | 05 | Organização de inventário | Ao consumir ou obter novos itens, o jogo deve organizá-los de acordo com os espaços disponíveis. |
-
-## Funcionalidades extras
-
-* Documentos de história: o jogo terá papeis como parte dos itens coletáveis, com o jogador podendo lê-los para saber detalhes da história ou do próprio jogo.
 
 ## Stack Tecnológica
 
