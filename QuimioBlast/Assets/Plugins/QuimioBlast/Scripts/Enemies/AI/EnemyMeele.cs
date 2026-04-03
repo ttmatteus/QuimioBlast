@@ -16,7 +16,7 @@ public class EnemyMelee : EnemyBase
     private float pathUpdateRate = 0.5f;
     private float pathTimer = 0f;
 
-    // Estados simplificados para a Issue de Aproximação
+    // estados básicos que preciso pra aproximação
     private enum State { Idle, Chasing }
     private State currentState = State.Idle;
 
@@ -38,7 +38,7 @@ public class EnemyMelee : EnemyBase
 
         UpdateState();
 
-        // Recalcula o caminho apenas se estiver em perseguição
+        // só recalcula caminho quando realmente estiver perseguindo
         if (currentState == State.Chasing && pathTimer >= pathUpdateRate)
         {
             pathTimer = 0f;
@@ -59,7 +59,7 @@ public class EnemyMelee : EnemyBase
             rb.linearVelocity = Vector2.zero;
         }
 
-        // Garante que o inimigo não rotacione sozinho
+        // garante que o inimigo nunca rotacione sozinho
         rb.angularVelocity = 0f;
         transform.rotation = Quaternion.identity;
     }
@@ -68,7 +68,7 @@ public class EnemyMelee : EnemyBase
     {
         float dist = DistanceToPlayer();
 
-        // Lógica de Detecção solicitada na Issue
+        // lógica simples de detecção
         if (dist <= detectionRange)
             currentState = State.Chasing;
         else
@@ -79,13 +79,13 @@ public class EnemyMelee : EnemyBase
     {
         if (path == null || currentWaypoint >= path.vectorPath.Count) return;
 
-        // Direção baseada nos pontos do A* Pathfinding
+        // direção com base nos pontos do a*
         Vector2 waypointPos = (Vector2)path.vectorPath[currentWaypoint];
         Vector2 dir = (waypointPos - rb.position).normalized;
 
         rb.linearVelocity = dir * moveSpeed;
 
-        // Avança para o próximo ponto se estiver perto o suficiente
+        // troca pro próximo ponto quando estiver perto o suficiente
         if (Vector2.Distance(rb.position, waypointPos) < 0.2f)
         {
             currentWaypoint++;
