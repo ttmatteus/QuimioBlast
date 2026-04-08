@@ -1,15 +1,16 @@
+﻿
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DevDebug2D : MonoBehaviour
 {
-    public GameObject enemyPrefab; 
-    public GameObject enemyInstance; 
+    public GameObject enemyPrefab;
+    public GameObject enemyInstance;
     void Start()
     {
         if (enemyInstance == null)
         {
-            enemyInstance = GameObject.Find("Enemy"); 
+            enemyInstance = GameObject.Find("Enemy");
         }
     }
 

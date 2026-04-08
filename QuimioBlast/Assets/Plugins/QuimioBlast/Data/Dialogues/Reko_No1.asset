@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: Reko_No1
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: Reko
+  dialogueText: "Uma nova m\xE1quina por aqui? Voc\xEA se construiu sozinho ou foi
+    mandado de fora?"
+  choices:
+  - choiceText: "Fui enviado para recuperar o controle desse laborat\xF3rio."
+    nextNode: {fileID: 11400000, guid: d1ea18d323dccb642bf230c04bbc2209, type: 2}
+  - choiceText: "Me mandaram para eliminar os esp\xE9cimes que sa\xEDram de controle."
+    nextNode: {fileID: 11400000, guid: 77e7e1f145167ae498a226b4154bf3d4, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []
