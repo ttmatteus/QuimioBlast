@@ -1,6 +1,0 @@
-﻿<Solution>
-  <Project Path="AstarPathfindingProject.csproj" />
-  <Project Path="PackageToolsEditor.csproj" />
-  <Project Path="Assembly-CSharp-firstpass.csproj" />
-  <Project Path="AstarPathfindingProjectEditor.csproj" />
-</Solution>
