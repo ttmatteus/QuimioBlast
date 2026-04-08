@@ -1,56 +1,47 @@
-using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-    public GameObject dialoguePanel; // O fundo da caixa (RF 14)
-    public TextMeshProUGUI dialogueText; // O componente de texto
+    public GameObject dialoguePanel;
+    public TextMeshProUGUI speakerText;
+    public TextMeshProUGUI dialogueText;
 
-    private string[] currentLines;
-    private int currentLineIndex;
-    private bool isTyping;
+    [Header("Opções")]
+    public GameObject buttonPrefab; // Prefab de um botão de UI
+    public Transform buttonContainer; // Onde os botões vão ficar (ex: um Vertical Layout Group)
 
     private void Awake() { Instance = this; }
 
-    public void StartDialogue(DialogueData dialogue)
+    public void StartDialogue(DialogueNode startNode)
     {
-        currentLines = dialogue.lines;
-        currentLineIndex = 0;
         dialoguePanel.SetActive(true);
-        ShowNextLine();
+        DisplayNode(startNode);
     }
 
-    public void ShowNextLine()
+    public void DisplayNode(DialogueNode node)
     {
-        if (currentLineIndex < currentLines.Length)
-        {
-            StopAllCoroutines();
-            StartCoroutine(TypeSentence(currentLines[currentLineIndex++]));
-        }
-        else { EndDialogue(); }
-    }
+        speakerText.text = node.speakerName;
+        dialogueText.text = node.dialogueText;
 
-    IEnumerator TypeSentence(string sentence)
-    {
-        dialogueText.text = "";
-        isTyping = true;
-        foreach (char letter in sentence.ToCharArray())
-        {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(0.03f);
-        }
-        isTyping = false;
-    }
+        // Executa a ação do nó, se houver (Requisito do professor)
+        node.onNodeEnter?.Invoke();
 
-    void Update()
-    {
-        // Avança diálogo com 'E' ou 'Espaço' (RF 06)
-        if (dialoguePanel.activeSelf && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)))
+        // Limpa botões antigos
+        foreach (Transform child in buttonContainer) Destroy(child.gameObject);
+
+        // Cria novos botões para cada opção (Aresta)
+        foreach (var choice in node.choices)
         {
-            if (!isTyping) ShowNextLine();
-            else { StopAllCoroutines(); dialogueText.text = currentLines[currentLineIndex - 1]; isTyping = false; }
+            GameObject btnObj = Instantiate(buttonPrefab, buttonContainer);
+            btnObj.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
+            btnObj.GetComponent<Button>().onClick.AddListener(() => {
+                if (choice.nextNode != null) DisplayNode(choice.nextNode);
+                else EndDialogue();
+            });
         }
     }
 
