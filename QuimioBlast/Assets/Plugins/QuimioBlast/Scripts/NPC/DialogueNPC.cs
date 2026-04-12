@@ -33,15 +33,4 @@ public class DialogueNPC : MonoBehaviour
             DialogueManager.Instance.EndDialogue();
         }
     }
-    /*
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Algo encostou no NPC: " + collision.gameObject.name); // NOVO
-        if (collision.CompareTag("Player"))
-        {
-            playerInRange = true;
-            Debug.Log("Foi o jogador! Pode apertar E."); // NOVO
-        }
-    }
-    */
 }
