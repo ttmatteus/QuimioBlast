@@ -9,7 +9,8 @@ public class InterfaceController : MonoBehaviour
     public bool invActive = false;
     void Start()
     {
-        itemText = null;
+        inventoryPanel.SetActive(false);
+        invActive = false;
     }
 
     void Update()
