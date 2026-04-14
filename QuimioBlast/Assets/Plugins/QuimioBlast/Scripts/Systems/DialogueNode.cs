@@ -4,8 +4,8 @@ using UnityEngine.Events;
 [System.Serializable]
 public class DialogueChoice
 {
-    public string choiceText; // Texto da opção (Aresta)
-    public DialogueNode nextNode; // Nó filho
+    public string choiceText; // Texto da opï¿½ï¿½o (Aresta)
+    public DialogueNode nextNode; // Nï¿½ filho
 }
 
 [CreateAssetMenu(fileName = "Novo No", menuName = "QuimioBlast/Dialogue/Node")]
@@ -13,10 +13,10 @@ public class DialogueNode : ScriptableObject
 {
     public string speakerName; // Interlocutor
     [TextArea(3, 10)]
-    public string dialogueText; // Texto do nó
+    public string dialogueText; // Texto do nï¿½
 
-    public DialogueChoice[] choices; // Lista de opções (Arestas para nós filhos)
+    public DialogueChoice[] choices; // Lista de opï¿½ï¿½es (Arestas para nï¿½s filhos)
 
-    [Header("Ação no Jogo")]
-    public UnityEvent onNodeEnter; // Executa uma ação (ex: dar item)
+    [Header("Aï¿½ï¿½o no Jogo")]
+    public UnityEvent onNodeEnter; // Executa uma aï¿½ï¿½o (ex: dar item)
 }
