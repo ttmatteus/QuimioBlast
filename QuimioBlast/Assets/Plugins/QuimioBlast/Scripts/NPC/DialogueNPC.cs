@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class DialogueNPC : MonoBehaviour
 {
-    [Header("Início da Conversa")]
-    [Tooltip("Arraste o primeiro Nó de diálogo deste NPC aqui.")]
+    [Header("Inï¿½cio da Conversa")]
+    [Tooltip("Arraste o primeiro Nï¿½ de diï¿½logo deste NPC aqui.")]
     public DialogueNode noInicial;
 
     private bool playerInRange = false;
 
     void Update()
     {
-        // Se o player está perto, aperta 'E' e a caixa não está aberta
+        // Se o player estï¿½ perto, aperta 'E' e a caixa nï¿½o estï¿½ aberta
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
             if (!DialogueManager.Instance.dialoguePanel.activeSelf && noInicial != null)
@@ -20,9 +20,16 @@ public class DialogueNPC : MonoBehaviour
         }
     }
 
+    [Header("Visual Feedback")]
+    public GameObject interactionPrompt; // Uma imagem de tecla 'E' flutuando
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player")) playerInRange = true;
+        if (collision.CompareTag("Player")) 
+        {
+            playerInRange = true;
+            if(interactionPrompt != null) interactionPrompt.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -30,7 +37,11 @@ public class DialogueNPC : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerInRange = false;
+            if(interactionPrompt != null) interactionPrompt.SetActive(false);
             DialogueManager.Instance.EndDialogue();
         }
     }
+    
+    
 }
+

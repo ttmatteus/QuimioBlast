@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections; // Necess√°rio para as Coroutines
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,15 +11,19 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;
 
-    [Header("OpÁıes")]
-    public GameObject buttonPrefab; // Prefab de um bot„o de UI
-    public Transform buttonContainer; // Onde os botıes v„o ficar (ex: um Vertical Layout Group)
+    [Header("Configura√ß√µes de Texto")]
+    public float typingSpeed = 0.03f; // Velocidade da escrita
+    private Coroutine typingCoroutine;
+
+    [Header("Op√ß√µes")]
+    public GameObject buttonPrefab;
+    public Transform buttonContainer;
 
     private void Awake() { Instance = this; }
 
     public void StartDialogue(DialogueNode startNode)
     {   
-        Time.timeScale = 0f; // Pausa o jogo durante o di·logo (Requisito do professor)
+        Time.timeScale = 0f; 
         dialoguePanel.SetActive(true);
         DisplayNode(startNode);
     }
@@ -26,51 +31,61 @@ public class DialogueManager : MonoBehaviour
     public void DisplayNode(DialogueNode node)
     {
         speakerText.text = node.speakerName;
-        dialogueText.text = node.dialogueText;
+        
+        // Inicia o efeito de m√°quina de escrever
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        typingCoroutine = StartCoroutine(TypeText(node.dialogueText));
 
-        // Executa a aÁ„o do nÛ, se houver
         node.onNodeEnter?.Invoke();
 
-        // Limpa botıes antigos
         foreach (Transform child in buttonContainer)
         {
             Destroy(child.gameObject);
         }
 
-        // VERIFICA«√O DE SEGURAN«A: Se n„o houver opÁıes, cria um bot„o de Sair
+        // Criamos os bot√µes, mas eles podem come√ßar invis√≠veis ou desativados 
+        // se voc√™ quiser que o jogador s√≥ escolha ap√≥s o texto terminar.
         if (node.choices == null || node.choices.Length == 0)
         {
-            GameObject btnObj = Instantiate(buttonPrefab, buttonContainer);
-            btnObj.GetComponentInChildren<TextMeshProUGUI>().text = "Sair";
-            btnObj.GetComponent<Button>().onClick.AddListener(() => {
-                EndDialogue(); // Chama o fim do di·logo direto
-            });
-            return; // Interrompe a funÁ„o aqui
+            CreateButton("Sair", () => EndDialogue());
         }
-
-        // Cria novos botıes para cada opÁ„o normalmente
-        foreach (var choice in node.choices)
+        else
         {
-            GameObject btnObj = Instantiate(buttonPrefab, buttonContainer);
-            btnObj.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
-
-            btnObj.GetComponent<Button>().onClick.AddListener(() => {
-                if (choice.nextNode != null)
-                {
-                    DisplayNode(choice.nextNode);
-                }
-                else
-                {
-                    EndDialogue();
-                }
-            });
+            foreach (var choice in node.choices)
+            {
+                CreateButton(choice.choiceText, () => {
+                    if (choice.nextNode != null) DisplayNode(choice.nextNode);
+                    else EndDialogue();
+                });
+            }
         }
     }
 
-    // A funÁ„o crucial para fechar a tela e voltar ao jogo
+    // Coroutine corrigida para funcionar com Time.timeScale = 0
+    IEnumerator TypeText(string textToType)
+    {
+        dialogueText.text = "";
+        foreach (char letter in textToType.ToCharArray())
+        {
+            dialogueText.text += letter;
+            // Usamos WaitForSecondsRealtime porque o Time.timeScale est√° em 0!
+            yield return new WaitForSecondsRealtime(typingSpeed);
+        }
+        typingCoroutine = null;
+    }
+
+    // Fun√ß√£o auxiliar para criar bot√µes e n√£o repetir c√≥digo
+    private void CreateButton(string text, UnityEngine.Events.UnityAction action)
+    {
+        GameObject btnObj = Instantiate(buttonPrefab, buttonContainer);
+        btnObj.GetComponentInChildren<TextMeshProUGUI>().text = text;
+        btnObj.GetComponent<Button>().onClick.AddListener(action);
+    }
+
     public void EndDialogue()
     {
-        dialoguePanel.SetActive(false); // Esconde a caixa de di·logo
-        Time.timeScale = 1f;            // DESCONGELA O TEMPO!
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        dialoguePanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 }
