@@ -3,20 +3,16 @@ using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
-    // --- UI and Data Variables ---
     public Objects[] slots;
     public Image[] slotImage;
     public int[] slotAmount;
     private InterfaceController iController;
 
-    [Header("Debug Testing")]
     public Objects testItemToPickup;
 
-    [Header("2D Interaction Settings")]
-    public Transform playerTransform;
-    public float interactionRadius = 1.5f;
+    private Objects itemProximo;
+    private GameObject objetoFisicoProximo;
 
-    // --- Struct for Custom Sorting ---
     private struct SlotData
     {
         public Objects item;
@@ -31,6 +27,8 @@ public class InventoryController : MonoBehaviour
 
     void Update()
     {
+        if (iController != null && iController.invActive) return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (testItemToPickup != null) AddItem(testItemToPickup);
@@ -41,69 +39,78 @@ public class InventoryController : MonoBehaviour
             SortInventoryAlphabetically();
         }
 
-        if (iController != null && iController.invActive)
+        if (itemProximo != null && Input.GetKeyDown(KeyCode.E))
         {
-            return;
+            AddItem(itemProximo);
+            Destroy(objetoFisicoProximo);
+            itemProximo = null;
+            objetoFisicoProximo = null;
+            iController.itemText.text = "";
         }
-
-        HandleInteractions();
     }
 
-    // --- 2D Proximity Interaction Logic ---
-    private void HandleInteractions()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerTransform == null) return;
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(playerTransform.position, interactionRadius);
-
-        Collider2D itemHit = null;
-        foreach (Collider2D col in hits)
+        if (collision.CompareTag("Object"))
         {
-            if (col.CompareTag("Object"))
-            {
-                itemHit = col;
-                break;
-            }
-        }
-
-        if (itemHit != null)
-        {
-            ObjectType objTypeComponent = itemHit.GetComponent<ObjectType>();
+            ObjectType objTypeComponent = collision.GetComponent<ObjectType>();
             if (objTypeComponent != null && objTypeComponent.objectType != null)
             {
-                Objects currentObj = objTypeComponent.objectType;
-                iController.itemText.text = "Pressione (E) para coletar " + currentObj.itemName;
-
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    AddItem(currentObj);
-                    Destroy(itemHit.gameObject);
-                    iController.itemText.text = "";
-                }
+                itemProximo = objTypeComponent.objectType;
+                objetoFisicoProximo = collision.gameObject;
+                iController.itemText.text = "Pressione (E) para coletar " + itemProximo.itemName;
             }
         }
-        else
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Object"))
         {
+            itemProximo = null;
+            objetoFisicoProximo = null;
             if (iController != null)
                 iController.itemText.text = "";
         }
     }
 
-    // --- Inventory Data Management ---
     public void AddItem(Objects itemToAdd)
+{
+    int limitePorSlot = 10;
+
+    for (int i = 0; i < slots.Length; i++)
     {
-        for(int i = 0; i < slots.Length; i++)
+        if (slots[i] != null && slots[i].itemName == itemToAdd.itemName && slotAmount[i] < limitePorSlot)
         {
-            if(slots[i] == null || slots[i].itemName == itemToAdd.itemName)
-            {
-                slots[i] = itemToAdd;
-                slotAmount[i]++;
-                slotImage[i].sprite = slots[i].itemSprite;
-                slotImage[i].color = Color.white;
-                break;
-            }
+            slotAmount[i]++;
+            UpdateSlotUI(i);
+            return; 
         }
     }
+
+    for (int i = 0; i < slots.Length; i++)
+    {
+        if (slots[i] == null)
+        {
+            slots[i] = itemToAdd;
+            slotAmount[i] = 1;
+            UpdateSlotUI(i);
+            return;
+        }
+    }
+    
+    Debug.Log("Inventário cheio!");
+}
+
+
+private void UpdateSlotUI(int index)
+{
+    if (slotImage[index] != null)
+    {
+        slotImage[index].sprite = slots[index].itemSprite;
+        slotImage[index].color = Color.white;
+    }
+}
 
     private void UpdateInventoryUI()
     {
@@ -117,7 +124,6 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    // --- Custom Quick Sort Implementation ---
     public void SortInventoryAlphabetically()
     {
         int validItemCount = 0;
