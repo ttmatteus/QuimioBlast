@@ -7,16 +7,14 @@ public class InventoryController : MonoBehaviour
     public Objects[] slots;
     public Image[] slotImage;
     public int[] slotAmount;
-
     private InterfaceController iController;
 
     [Header("Debug Testing")]
-    public Objects testItemToPickup; 
+    public Objects testItemToPickup;
 
-    // --- NEW: 2D Interaction Variables ---
     [Header("2D Interaction Settings")]
-    public Transform playerTransform; 
-    public float interactionRadius = 1.5f; 
+    public Transform playerTransform;
+    public float interactionRadius = 1.5f;
 
     // --- Struct for Custom Sorting ---
     private struct SlotData
@@ -33,7 +31,6 @@ public class InventoryController : MonoBehaviour
 
     void Update()
     {
-        // Debug inputs for testing
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (testItemToPickup != null) AddItem(testItemToPickup);
@@ -44,8 +41,7 @@ public class InventoryController : MonoBehaviour
             SortInventoryAlphabetically();
         }
 
-        // Guard Clause: Block interaction if inventory is open
-        if (iController != null && iController.invActive) 
+        if (iController != null && iController.invActive)
         {
             return;
         }
@@ -56,39 +52,40 @@ public class InventoryController : MonoBehaviour
     // --- 2D Proximity Interaction Logic ---
     private void HandleInteractions()
     {
-        // Guard clause: ensure we have a player reference before calculating distance
         if (playerTransform == null) return;
 
-        // Evaluates a circle area on the 2D plane
-        Collider2D hit = Physics2D.OverlapCircle(playerTransform.position, interactionRadius);
-        
-        if(hit != null)
-        {
-            if(hit.CompareTag("Object")) 
-            {
-                ObjectType objTypeComponent = hit.GetComponent<ObjectType>();
-                
-                if (objTypeComponent != null && objTypeComponent.objectType != null)
-                {
-                    Objects currentObj = objTypeComponent.objectType;
-                    iController.itemText.text = "Pressione (E) para coletar " + currentObj.name;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(playerTransform.position, interactionRadius);
 
-                    if(Input.GetKeyDown(KeyCode.E))
-                    {
-                        AddItem(currentObj); 
-                        Destroy(hit.gameObject);
-                        iController.itemText.text = ""; 
-                    }
-                }
-            } 
-            else 
+        Collider2D itemHit = null;
+        foreach (Collider2D col in hits)
+        {
+            if (col.CompareTag("Object"))
             {
-                iController.itemText.text = "";
+                itemHit = col;
+                break;
+            }
+        }
+
+        if (itemHit != null)
+        {
+            ObjectType objTypeComponent = itemHit.GetComponent<ObjectType>();
+            if (objTypeComponent != null && objTypeComponent.objectType != null)
+            {
+                Objects currentObj = objTypeComponent.objectType;
+                iController.itemText.text = "Pressione (E) para coletar " + currentObj.itemName;
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    AddItem(currentObj);
+                    Destroy(itemHit.gameObject);
+                    iController.itemText.text = "";
+                }
             }
         }
         else
         {
-            iController.itemText.text = "";
+            if (iController != null)
+                iController.itemText.text = "";
         }
     }
 
@@ -97,14 +94,13 @@ public class InventoryController : MonoBehaviour
     {
         for(int i = 0; i < slots.Length; i++)
         {
-            if(slots[i] == null || slots[i].name == itemToAdd.name)
+            if(slots[i] == null || slots[i].itemName == itemToAdd.itemName)
             {
                 slots[i] = itemToAdd;
                 slotAmount[i]++;
-                
                 slotImage[i].sprite = slots[i].itemSprite;
-                slotImage[i].color = Color.white; 
-                break; 
+                slotImage[i].color = Color.white;
+                break;
             }
         }
     }
@@ -116,7 +112,7 @@ public class InventoryController : MonoBehaviour
             if (slots[i] != null && slotImage[i] != null)
             {
                 slotImage[i].sprite = slots[i].itemSprite;
-                slotImage[i].color = Color.white; 
+                slotImage[i].color = Color.white;
             }
         }
     }
@@ -153,7 +149,7 @@ public class InventoryController : MonoBehaviour
             if (slotImage[i] != null)
             {
                 slotImage[i].sprite = null;
-                slotImage[i].color = new Color(1, 1, 1, 0); 
+                slotImage[i].color = new Color(1, 1, 1, 0);
             }
         }
 
@@ -195,7 +191,6 @@ public class InventoryController : MonoBehaviour
         SlotData temp1 = array[i + 1];
         array[i + 1] = array[high];
         array[high] = temp1;
-
         return i + 1;
     }
 }
