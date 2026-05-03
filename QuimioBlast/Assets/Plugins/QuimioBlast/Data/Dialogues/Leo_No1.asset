@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: Leo_No1
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: Leo
+  dialogueText: "Um rosto novo? Voc\xEA veio de fora, n\xE3o \xE9? Espero que n\xE3o
+    esteja aqui pra nos matar."
+  choices:
+  - choiceText: "Busco apenas eliminar os que forem necess\xE1rios."
+    nextNode: {fileID: 11400000, guid: ad4058256d67eda4d97ec5bd3ce7a911, type: 2}
+  - choiceText: "S\xF3 n\xE3o me d\xEAem motivos."
+    nextNode: {fileID: 11400000, guid: 8e7356d6e813d414f8744b72b53ccb66, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []
