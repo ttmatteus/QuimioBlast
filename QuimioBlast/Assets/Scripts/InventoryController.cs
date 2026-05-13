@@ -1,23 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic; // Necessário para Dictionary
+using System.Linq;               // Necessário para ordenação facilitada
 
 public class InventoryController : MonoBehaviour
 {
-    public Objects[] slots;
-    public Image[] slotImage;
-    public int[] slotAmount;
-    private InterfaceController iController;
+    // O Dictionary armazena o Item (chave) e a Quantidade (valor)
+    private Dictionary<Objects, int> inventory = new Dictionary<Objects, int>();
 
+    [Header("Configurações de UI")]
+    public Image[] slotImages; // Arraste os componentes de imagem aqui no Inspector
+    public int maxSlots = 10;
+    public int limitePorSlot = 10;
+
+    [Header("Teste")]
     public Objects testItemToPickup;
 
+    private InterfaceController iController;
     private Objects itemProximo;
     private GameObject objetoFisicoProximo;
-
-    private struct SlotData
-    {
-        public Objects item;
-        public int amount;
-    }
 
     void Start()
     {
@@ -29,16 +30,19 @@ public class InventoryController : MonoBehaviour
     {
         if (iController != null && iController.invActive) return;
 
+        // Tecla 1: Adicionar item de teste
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             if (testItemToPickup != null) AddItem(testItemToPickup);
         }
 
+        // Tecla 2: Ordenar (Agora muito mais simples com LINQ)
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SortInventoryAlphabetically();
         }
 
+        // Tecla E: Coleta
         if (itemProximo != null && Input.GetKeyDown(KeyCode.E))
         {
             AddItem(itemProximo);
@@ -75,128 +79,68 @@ public class InventoryController : MonoBehaviour
     }
 
     public void AddItem(Objects itemToAdd)
-{
-    int limitePorSlot = 10;
-
-    for (int i = 0; i < slots.Length; i++)
     {
-        if (slots[i] != null && slots[i].itemName == itemToAdd.itemName && slotAmount[i] < limitePorSlot)
+        // Verifica se o item já existe no HashMap
+        if (inventory.ContainsKey(itemToAdd))
         {
-            slotAmount[i]++;
-            UpdateSlotUI(i);
-            return; 
+            if (inventory[itemToAdd] < limitePorSlot)
+            {
+                inventory[itemToAdd]++;
+                UpdateInventoryUI();
+                return;
+            }
+        }
+
+        // Se não existe, verifica se ainda há espaço em slots
+        if (inventory.Count < slotImages.Length)
+        {
+            inventory.Add(itemToAdd, 1);
+            UpdateInventoryUI();
+        }
+        else
+        {
+            Debug.Log("Inventário cheio!");
         }
     }
 
-    for (int i = 0; i < slots.Length; i++)
-    {
-        if (slots[i] == null)
-        {
-            slots[i] = itemToAdd;
-            slotAmount[i] = 1;
-            UpdateSlotUI(i);
-            return;
-        }
-    }
-    
-    Debug.Log("Inventário cheio!");
-}
-
-
-private void UpdateSlotUI(int index)
-{
-    if (slotImage[index] != null)
-    {
-        slotImage[index].sprite = slots[index].itemSprite;
-        slotImage[index].color = Color.white;
-    }
-}
-
+    // Com HashMap, a UI deve ser atualizada como um reflexo dos dados
     private void UpdateInventoryUI()
     {
-        for (int i = 0; i < slots.Length; i++)
+        // Primeiro, limpamos todos os slots visuais
+        ClearAllSlotUI();
+
+        int i = 0;
+        foreach (var entry in inventory)
         {
-            if (slots[i] != null && slotImage[i] != null)
+            if (i < slotImages.Length)
             {
-                slotImage[i].sprite = slots[i].itemSprite;
-                slotImage[i].color = Color.white;
+                slotImages[i].sprite = entry.Key.itemSprite;
+                slotImages[i].color = Color.white;
+                // Se você tiver um texto de quantidade, atualizaria aqui:
+                // slotText[i].text = entry.Value.ToString();
+                i++;
+            }
+        }
+    }
+
+    private void ClearAllSlotUI()
+    {
+        for (int i = 0; i < slotImages.Length; i++)
+        {
+            if (slotImages[i] != null)
+            {
+                slotImages[i].sprite = null;
+                slotImages[i].color = new Color(1, 1, 1, 0);
             }
         }
     }
 
     public void SortInventoryAlphabetically()
     {
-        int validItemCount = 0;
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i] != null) validItemCount++;
-        }
-
-        SlotData[] compactedItems = new SlotData[validItemCount];
-        int currentIndex = 0;
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i] != null)
-            {
-                compactedItems[currentIndex] = new SlotData { item = slots[i], amount = slotAmount[i] };
-                currentIndex++;
-            }
-        }
-
-        if (compactedItems.Length > 1)
-        {
-            QuickSort(compactedItems, 0, compactedItems.Length - 1);
-        }
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            slots[i] = null;
-            slotAmount[i] = 0;
-            if (slotImage[i] != null)
-            {
-                slotImage[i].sprite = null;
-                slotImage[i].color = new Color(1, 1, 1, 0);
-            }
-        }
-
-        for (int i = 0; i < compactedItems.Length; i++)
-        {
-            slots[i] = compactedItems[i].item;
-            slotAmount[i] = compactedItems[i].amount;
-        }
+        // Com Dictionary e LINQ, a ordenação é feita em uma linha
+        inventory = inventory.OrderBy(x => x.Key.itemName)
+                             .ToDictionary(x => x.Key, x => x.Value);
 
         UpdateInventoryUI();
-    }
-
-    private void QuickSort(SlotData[] array, int low, int high)
-    {
-        if (low < high)
-        {
-            int partitionIndex = Partition(array, low, high);
-            QuickSort(array, low, partitionIndex - 1);
-            QuickSort(array, partitionIndex + 1, high);
-        }
-    }
-
-    private int Partition(SlotData[] array, int low, int high)
-    {
-        SlotData pivot = array[high];
-        int i = (low - 1);
-
-        for (int j = low; j < high; j++)
-        {
-            if (string.Compare(array[j].item.itemName, pivot.item.itemName, System.StringComparison.Ordinal) < 0)
-            {
-                i++;
-                SlotData temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
-            }
-        }
-
-        SlotData temp1 = array[i + 1];
-        array[i + 1] = array[high];
-        array[high] = temp1;
-        return i + 1;
     }
 }
