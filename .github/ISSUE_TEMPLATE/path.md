@@ -1,8 +1,10 @@
+---
 name: 6. Nova Funcionalidade - Menor Caminho
 about: Sugira uma melhoria ou nova feature para o projeto
 title: "[FEATURE] Movimentação do Player via Pathfinding (Click-to-Move)"
 labels: enhancement
 assignees: ''
+---
 
 ### 📋 Resumo da Ideia
 <!-- Descreva em uma frase o que você gostaria de ver no projeto -->
