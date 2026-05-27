@@ -1,5 +1,5 @@
 ---
-name: 3. Nova Funcionalidade: Usar Item
+name: 3. Nova Funcionalidade - Usar Item
 about: Sugira uma melhoria ou nova feature para o projeto
 title: "[FEATURE] Sistema de Consumo e Uso de Itens"
 labels: enhancement
