@@ -1,8 +1,10 @@
+---
 name: 5. Nova Funcionalidade - Armas e Poderes
 about: Sugira uma melhoria ou nova feature para o projeto
 title: "[FEATURE] Sistema de Uso de Armas e Poderes Ativos"
 labels: enhancement
 assignees: ''
+---
 
 ### 📋 Resumo da Ideia
 <!-- Descreva em uma frase o que você gostaria de ver no projeto -->
