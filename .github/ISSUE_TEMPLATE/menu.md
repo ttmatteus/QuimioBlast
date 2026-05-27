@@ -1,5 +1,5 @@
 ---
-name: 1. Nova Funcionalidade: Menu
+name: 2. Nova Funcionalidade - Menu
 about: Sugira uma melhoria ou nova feature para o projeto
 title: "[FEATURE] Menu Principal e Menu de Pause"
 labels: enhancement
