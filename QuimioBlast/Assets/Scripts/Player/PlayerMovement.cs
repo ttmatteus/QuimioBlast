@@ -14,10 +14,12 @@ public class PlayerMovement2D : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 inputMovimento;
     private bool estaDashing;
-    
+
     // Variáveis para detectar Double Tap
     private float tempoUltimoClique;
     private KeyCode ultimaTecla;
+
+    public Vector2 UltimaDirecao { get; private set; } = Vector2.down;
 
     private void Awake()
     {
@@ -49,10 +51,12 @@ public class PlayerMovement2D : MonoBehaviour
         if (x != 0)
         {
             inputMovimento = new Vector2(x, 0);
+            UltimaDirecao = inputMovimento;
         }
         else if (y != 0)
         {
             inputMovimento = new Vector2(0, y);
+            UltimaDirecao = inputMovimento;
         }
         else
         {
