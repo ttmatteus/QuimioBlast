@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7650135513072117397}
   - component: {fileID: 8382731116976523322}
   - component: {fileID: 8284133305110648832}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NPC_ALI
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.54, y: -2.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4079642, y: 0.43419927, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,11 +79,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 781986417
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -7648073625099216525, guid: ba9d85adf89bc4e51b8d17fedd1c2d5c, type: 3}
   m_Color: {r: 0, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -128,7 +128,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.21133333}
-  m_Radius: 1.2
+  m_Radius: 7
 --- !u!114 &8284133305110648832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +142,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNPC
   noInicial: {fileID: 11400000, guid: c977663997c05534b833c0ba8b8ce30c, type: 2}
+  interactionPrompt: {fileID: 0}
