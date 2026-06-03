@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Objects
   itemName: Potion
   itemSprite: {fileID: 731806605160617493, guid: f0edbfb1e412354b2858a9513791c134, type: 3}
+  itemPrefab: {fileID: 0}
+  isConsumable: 1
+  healAmount: 20

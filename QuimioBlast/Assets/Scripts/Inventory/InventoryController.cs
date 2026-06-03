@@ -27,35 +27,42 @@ public class InventoryController : MonoBehaviour
     public Objects testItemToPickup;
 
     private InterfaceController iController;
+    private PlayerHealth playerHealth;
     private Objects itemProximo;
     private GameObject objetoFisicoProximo;
+
+    // Teclas da hotbar mapeadas aos índices dos slots (0 = tecla 1, ..., 4 = tecla 5)
+    private readonly KeyCode[] hotbarKeys = {
+        KeyCode.Alpha1,
+        KeyCode.Alpha2,
+        KeyCode.Alpha3,
+        KeyCode.Alpha4,
+        KeyCode.Alpha5
+    };
 
     void Start()
     {
         iController = FindAnyObjectByType<InterfaceController>();
+        playerHealth = FindAnyObjectByType<PlayerHealth>();
+
+        if (playerHealth == null)
+            Debug.LogWarning("[InventoryController] PlayerHealth não encontrado na cena. Itens consumíveis não funcionarão.");
+
         UpdateInventoryUI();
     }
 
     void Update()
     {
-        if (iController != null && iController.invActive) return;
-
-        // Tecla 1: Adicionar item de teste
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // Hotbar (1-5): usar itens consumíveis quando o inventário estiver fechado
+        if (iController == null || !iController.invActive)
         {
-            if (testItemToPickup != null) AddItem(testItemToPickup);
-        }
-
-        // Tecla 2: Ordenar 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SortInventoryAlphabetically();
-        }
-
-        // Tecla 3: Exibir Inventário no Console (Requisito 3)
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ShowInventory();
+            for (int i = 0; i < hotbarKeys.Length; i++)
+            {
+                if (Input.GetKeyDown(hotbarKeys[i]))
+                {
+                    UseItemInSlot(i);
+                }
+            }
         }
 
         // Tecla E: Coleta de item no chão
@@ -67,6 +74,56 @@ public class InventoryController : MonoBehaviour
             objetoFisicoProximo = null;
             if (iController != null) iController.itemText.text = "";
         }
+    }
+
+    /// <summary>
+    /// Usa o item no slot da hotbar indicado pelo índice (0 = tecla 1, ...).
+    /// Aplica o efeito do item consumível no jogador e decrementa a quantidade.
+    /// </summary>
+    public void UseItemInSlot(int index)
+    {
+        // Converte o índice da hotbar na chave do dicionário (por ordem de inserção)
+        var keys = new System.Collections.Generic.List<string>(inventory.Keys);
+        if (index < 0 || index >= keys.Count)
+        {
+            Debug.Log($"[Inventário] Slot {index + 1} está vazio.");
+            return;
+        }
+
+        string itemID = keys[index];
+        InventoryRecord record = inventory[itemID];
+
+        if (!record.itemData.isConsumable)
+        {
+            Debug.Log($"[Inventário] {itemID} não é um item consumível.");
+            return;
+        }
+
+        if (playerHealth == null)
+        {
+            Debug.LogWarning("[Inventário] PlayerHealth não encontrado. Não foi possível usar o item.");
+            return;
+        }
+
+        if (playerHealth.IsFullHealth())
+        {
+            Debug.Log($"[Inventário] Vida já está cheia! {itemID} não foi consumido.");
+            return;
+        }
+
+        // Aplica o efeito
+        playerHealth.Heal(record.itemData.healAmount);
+        Debug.Log($"[Inventário] {itemID} usado! +{record.itemData.healAmount} de vida.");
+
+        // Decrementa quantidade e remove do inventário se chegar a zero
+        record.quantity--;
+        if (record.quantity <= 0)
+        {
+            inventory.Remove(itemID);
+            Debug.Log($"[Inventário] {itemID} acabou e foi removido do inventário.");
+            SortInventoryAlphabetically();
+        }
+        UpdateInventoryUI();
     }
 
     // --- REQUISITOS OBRIGATÓRIOS DO EXERCÍCIO ---
