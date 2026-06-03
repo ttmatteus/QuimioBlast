@@ -208,6 +208,9 @@ public class PlayerHealth : MonoBehaviour
         isInvisivel = false;
     }
 
+    public bool IsFullHealth() => vidaAtual >= vidaMaxima;
+    public void Heal(float quantidade) => Curar(quantidade);
+
     // ── utilidade ─────────────────────────────────────────────────────────────
 
     private void AtualizarSlider()
