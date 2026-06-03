@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Objects
   itemName: "Ma\xE7\xE3"
   itemSprite: {fileID: -7832214784768987486, guid: 961412100360878c7a78c4a985043c30, type: 3}
+  itemPrefab: {fileID: 0}
+  isConsumable: 1
+  healAmount: 10
