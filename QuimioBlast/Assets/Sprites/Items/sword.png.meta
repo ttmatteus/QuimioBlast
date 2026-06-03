@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2f15ece993981e85e82eb34ba0cd0b6b
+guid: acbed0f5fcf311b40b4857c03c537336
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3753825769889500098
-    second: sword_0
+      213: 2927583925989007719
+    second: PocaoCuraPequena_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sword_0
+      name: PocaoCuraPequena_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 39
-        width: 505
-        height: 462
+        x: 39
+        y: 9
+        width: 92
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e347705d95bb7ebc0800000000000000
-      internalID: -3753825769889500098
+      spriteID: 761e7b6d11ed0a820800000000000000
+      internalID: 2927583925989007719
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sword_0: -3753825769889500098
+      PocaoCuraPequena_0: 2927583925989007719
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

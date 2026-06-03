@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 961412100360878c7a78c4a985043c30
+guid: fb54bb16ac4464946a1895670bf6ceba
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7832214784768987486
-    second: apple_0
+      213: 3932125460016373474
+    second: PocaoVelocidade_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: apple_0
+      name: PocaoVelocidade_0
       rect:
         serializedVersion: 2
-        x: 35
-        y: 23
-        width: 218
-        height: 254
+        x: 39
+        y: 9
+        width: 92
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ae284d66226e4390800000000000000
-      internalID: -7832214784768987486
+      spriteID: 2ee9b88c547b19630800000000000000
+      internalID: 3932125460016373474
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      apple_0: -7832214784768987486
+      PocaoVelocidade_0: 3932125460016373474
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

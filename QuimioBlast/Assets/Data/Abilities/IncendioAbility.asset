@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a873b9fdfc154d1aa60ced11ecc1e89, type: 3}
+  m_Name: IncendioAbility
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::IncendioAbility
+  nomeHabilidade: Nova Habilidade
+  dano: 20
+  cooldown: 1
+  alcance: 5
+  prefabVFX: {fileID: 0}
+  prefabProjetil: {fileID: 0}
+  parametroAnimacao: 
+  raioAoE: 3
