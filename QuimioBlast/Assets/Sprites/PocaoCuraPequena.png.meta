@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 534974308f1c337e58d6be86ba1ce815
+guid: 0128174abfe5c4e418f5246d2d28291b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2452460657304657604
-    second: handgun_5_0
+      213: 2927583925989007719
+    second: PocaoCuraPequena_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: handgun_5_0
+      name: PocaoCuraPequena_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 80
-        width: 485
-        height: 328
+        x: 39
+        y: 9
+        width: 92
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c312cbf960c17fdd0800000000000000
-      internalID: -2452460657304657604
+      spriteID: 761e7b6d11ed0a820800000000000000
+      internalID: 2927583925989007719
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      handgun_5_0: -2452460657304657604
+      PocaoCuraPequena_0: 2927583925989007719
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
