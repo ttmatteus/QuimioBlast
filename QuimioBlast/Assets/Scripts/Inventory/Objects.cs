@@ -5,5 +5,9 @@ public class Objects : ScriptableObject
 {
     public string itemName;
     public Sprite itemSprite;
-    public GameObject itemPrefab; // <- adiciona isso
+    public GameObject itemPrefab;
+
+    [Header("Consumo")]
+    public bool isConsumable;
+    public int healAmount;
 }
