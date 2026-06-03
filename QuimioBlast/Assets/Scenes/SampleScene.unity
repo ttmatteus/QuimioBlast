@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 115989425}
   - component: {fileID: 115989424}
   - component: {fileID: 115989426}
+  - component: {fileID: 115989427}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -558,7 +559,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f105e41f9acdc40954cbd605ca15fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::PlayerMovement
-  velocidade: 7
+  velocidadeBase: 7
+  multiplicadorSprint: 1.5
+  forcaDash: 20
+  tempoDash: 0.2
+  intervaloDoubleTap: 0.3
 --- !u!50 &115989425
 Rigidbody2D:
   serializedVersion: 5
@@ -622,6 +627,19 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.2
+--- !u!114 &115989427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115989420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64b57882b627b84d90d584bd7d959e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::PlayerHealth
+  maxHealth: 100
 --- !u!1 &227923788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,14 +1170,11 @@ MonoBehaviour:
   - {fileID: 0}
   slotImage:
   - {fileID: 2006477129}
-  - {fileID: 1041768715}
+  - {fileID: 0}
   - {fileID: 227923789}
   - {fileID: 1717680309}
   - {fileID: 608022168}
   slotAmount: 0500000000000000000000000000000000000000
-  testItemToPickup: {fileID: 0}
-  playerTransform: {fileID: 0}
-  interactionRadius: 1.5
 --- !u!114 &707998127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,7 +1226,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2006477131}
-  - {fileID: 1041768717}
   - {fileID: 227923791}
   - {fileID: 1717680311}
   - {fileID: 608022170}
