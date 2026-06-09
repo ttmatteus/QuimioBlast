@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5889938888432513959}
   - component: {fileID: 3039692649776378168}
   - component: {fileID: 1400088367675613042}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Item_PocaoVelocidade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,11 +79,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -967999895
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3932125460016373474, guid: f703070c0b3514210a0efad43a84f232, type: 3}
+  m_Sprite: {fileID: 3932125460016373474, guid: 054b10f639b5595408c1d880d78c664a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8387299190326709434}
   - component: {fileID: 1973632930885447809}
   - component: {fileID: 8911889355116825205}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Item_PocaoCuraTotal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,11 +79,11 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -967999895
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6732305725953491339, guid: 894b407baa67042e1b7bf046ceed04e8, type: 3}
+  m_Sprite: {fileID: 6732305725953491339, guid: d7e50dfd9c12b184aa0378ac99667bc4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -56,10 +56,6 @@ public class ItemData : ScriptableObject
     /// </summary>
     public bool PodeUsar(PlayerHealth saude)
     {
-        bool ehCura = tipoEfeito == TipoEfeito.CuraTotal || tipoEfeito == TipoEfeito.CuraPequena;
-        if (ehCura && saude.vidaAtual >= saude.vidaMaxima)
-            return false;
-
         return true;
     }
 
