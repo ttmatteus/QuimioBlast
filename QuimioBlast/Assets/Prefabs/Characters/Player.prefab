@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 667743896538420924}
   - component: {fileID: 2900157665130092131}
   - component: {fileID: 8482424590184703557}
+  - component: {fileID: 7055487438063640600}
+  - component: {fileID: 7850313835653441909}
+  - component: {fileID: 1143002920131844505}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -81,7 +84,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 781986417
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4321827262836977642, guid: f9400129fded143b588bf8ef932c5bfb, type: 3}
@@ -138,6 +141,8 @@ MonoBehaviour:
   forcaDash: 20
   tempoDash: 0.2
   intervaloDoubleTap: 0.3
+  distanciaChegada: 0.25
+  prefabMarcador: {fileID: 0}
 --- !u!58 &8482424590184703557
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -174,3 +179,62 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 1.7
+--- !u!114 &7055487438063640600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803027441488329566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AstarPathfindingProject::Pathfinding.Seeker
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &7850313835653441909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803027441488329566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe1a0151fbd74905adc8f489100965b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  vidaMaxima: 100
+  danoInimigo: 20
+  cooldownImunidade: 1
+  canvasVida: {fileID: 0}
+  sliderVida: {fileID: 0}
+  alturaOffset: 1
+  isInvisivel: 0
+--- !u!114 &1143002920131844505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803027441488329566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c4e6c20c54914ddaa756d0fc553b3ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager

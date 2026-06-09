@@ -52,6 +52,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         Instancia = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -92,10 +93,34 @@ public class InventoryManager : MonoBehaviour
     // Reordena a lista e notifica a HUD
     private void OrdenarEAtualizar()
     {
-        slots.Sort((a, b) =>
-            PrioridadeTipo(a.itemData.tipoEfeito)
-            .CompareTo(PrioridadeTipo(b.itemData.tipoEfeito)));
+        // Se tiver 1 ou nenhum item, não há o que ordenar
+        if (slots.Count <= 1)
+        {
+            OnInventarioAtualizado?.Invoke();
+            return;
+        }
 
+        // --- ALGORITMO INSERTION SORT (ESCRITO DO ZERO) ---
+        for (int i = 1; i < slots.Count; i++)
+        {
+            EntradaInventario chave = slots[i];
+            int j = i - 1;
+
+            // Compara a prioridade do item atual com os anteriores.
+            // Se o anterior tiver um número de prioridade MAIOR (ou seja, menos importante),
+            // ele "arrasta" o item anterior para a direita.
+            while (j >= 0 && PrioridadeTipo(slots[j].itemData.tipoEfeito) > PrioridadeTipo(chave.itemData.tipoEfeito))
+            {
+                slots[j + 1] = slots[j];
+                j--;
+            }
+
+            // Insere a chave na sua posição correta ordenada
+            slots[j + 1] = chave;
+        }
+        // --------------------------------------------------
+
+        // Notifica a HUD para redesenhar os slots na nova ordem
         OnInventarioAtualizado?.Invoke();
     }
 

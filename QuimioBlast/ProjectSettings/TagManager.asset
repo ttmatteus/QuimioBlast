@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Enemy
+  - Object
   layers:
   - Default
   - TransparentFX
@@ -13,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
+  - Items
   - Player
   - Enemies
   - NPC
-  - 
   - 
   - 
   - 
@@ -48,6 +49,9 @@ TagManager:
     locked: 0
   - name: Enviroment
     uniqueID: 1952123357
+    locked: 0
+  - name: Items
+    uniqueID: 3326967401
     locked: 0
   - name: Entitites
     uniqueID: 781986417

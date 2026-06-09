@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bac1bfd80dd64dcda2a10901edf0b9c, type: 3}
   m_Name: PocaoInvisibilidade
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::ItemData
-  nomeItem: Item sem nome
-  icone: {fileID: 0}
-  tipoEfeito: 0
+  nomeItem: "Po\xE7\xE3o de Invisibilidade"
+  icone: {fileID: 3221450564805863884, guid: 37e89a85a3b56ff42be437fd0fb85384, type: 3}
+  tipoEfeito: 3
   valorEfeito: 20
   duracaoEfeito: 10

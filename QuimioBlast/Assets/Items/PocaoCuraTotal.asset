@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bac1bfd80dd64dcda2a10901edf0b9c, type: 3}
   m_Name: PocaoCuraTotal
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::ItemData
-  nomeItem: Item sem nome
-  icone: {fileID: 0}
+  nomeItem: "Po\xE7\xE3o de Cura Total"
+  icone: {fileID: 6732305725953491339, guid: d7e50dfd9c12b184aa0378ac99667bc4, type: 3}
   tipoEfeito: 0
-  valorEfeito: 20
-  duracaoEfeito: 10
+  valorEfeito: 100
+  duracaoEfeito: 1
