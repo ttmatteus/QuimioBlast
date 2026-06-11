@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bac1bfd80dd64dcda2a10901edf0b9c, type: 3}
+  m_Name: PocaoCuraPequena
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::ItemData
+  nomeItem: "Po\xE7\xE3o de Cura Pequena"
+  icone: {fileID: 2927583925989007719, guid: 7f21764c273fb4949b352c5c8e903a5d, type: 3}
+  tipoEfeito: 1
+  valorEfeito: 20
+  duracaoEfeito: 1

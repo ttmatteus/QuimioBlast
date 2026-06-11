@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f0edbfb1e412354b2858a9513791c134
+guid: ee5cac019ed2ba34fa3bcf0975559014
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 731806605160617493
-    second: potion_0
+      213: 6732305725953491339
+    second: PocaoCuraTotal_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: potion_0
+      name: PocaoCuraTotal_0
       rect:
         serializedVersion: 2
-        x: 131
-        y: 119
-        width: 122
-        height: 146
+        x: 39
+        y: 9
+        width: 92
+        height: 132
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51612e8ea36e72a00800000000000000
-      internalID: 731806605160617493
+      spriteID: b8149c27364fd6d50800000000000000
+      internalID: 6732305725953491339
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      potion_0: 731806605160617493
+      PocaoCuraTotal_0: 6732305725953491339
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
