@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: ALI_No1_1_Script
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: ALI
+  dialogueText: "Atrav\xE9s de um comando ancestral codificado em seu n\xFAcleo: o Genesis.sh. Ele n\xE3o \xE9 uma magia, como os anci\xE3os deformados do Laborat\xF3rio Central costumam pregar. \xC9 Alquimia Computacional pura. Um script de inicializa\xE7\xE3o de baixo n\xEDvel capaz de limpar o cache radioativo da biosfera, desalocar o niilismo da Matriz e realocar a vida. Mas um script sem seus argumentos de entrada \xE9 apenas um ponteiro nulo (null pointer)."
+  choices:
+  - choiceText: "E quais s\xE3o esses argumentos de entrada?"
+    nextNode: {fileID: 11400000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 2}
+  - choiceText: "Entendo. Estou pronto para executar minha fun\xE7\xE3o."
+    nextNode: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []

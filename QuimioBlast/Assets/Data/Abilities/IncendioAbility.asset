@@ -15,8 +15,8 @@ MonoBehaviour:
   nomeHabilidade: Nova Habilidade
   dano: 20
   cooldown: 1
-  alcance: 5
+  alcance: 7
   prefabVFX: {fileID: 0}
-  prefabProjetil: {fileID: 0}
-  parametroAnimacao: 
-  raioAoE: 3
+  prefabProjetil: {fileID: 100000000000000001, guid: 6a11c7d3e55b54974a6649615fad944b, type: 3}
+  parametroAnimacao: Confringo
+  raioAoE: 15

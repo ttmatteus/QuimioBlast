@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MeleeAbility
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::MeleeAbility
   nomeHabilidade: Nova Habilidade
-  dano: 20
+  dano: 35
   cooldown: 1
-  alcance: 5
+  alcance: 3
   prefabVFX: {fileID: 0}
   prefabProjetil: {fileID: 0}
-  parametroAnimacao: 
+  parametroAnimacao: Soco

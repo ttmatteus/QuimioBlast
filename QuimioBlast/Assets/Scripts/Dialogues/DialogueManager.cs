@@ -7,19 +7,35 @@ using System.Collections; // Necessário para as Coroutines
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    public static event System.Action<DialogueNode> OnNodeEntered;
     public GameObject dialoguePanel;
     public TextMeshProUGUI speakerText;
     public TextMeshProUGUI dialogueText;
 
     [Header("Configurações de Texto")]
-    public float typingSpeed = 0.03f; // Velocidade da escrita
+    public float typingSpeed = 0.01f;
     private Coroutine typingCoroutine;
+    private string textoAtual = "";
 
     [Header("Opções")]
     public GameObject buttonPrefab;
     public Transform buttonContainer;
 
     private void Awake() { Instance = this; }
+
+    private void Update()
+    {
+        if (typingCoroutine != null && Input.GetMouseButtonDown(0))
+            PularDigitacao();
+    }
+
+    private void PularDigitacao()
+    {
+        if (typingCoroutine == null) return;
+        StopCoroutine(typingCoroutine);
+        typingCoroutine = null;
+        dialogueText.text = textoAtual;
+    }
 
     public void StartDialogue(DialogueNode startNode)
     {   
@@ -37,6 +53,7 @@ public class DialogueManager : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeText(node.dialogueText));
 
         node.onNodeEnter?.Invoke();
+        OnNodeEntered?.Invoke(node);
 
         foreach (Transform child in buttonContainer)
         {
@@ -61,9 +78,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    // Coroutine corrigida para funcionar com Time.timeScale = 0
     IEnumerator TypeText(string textToType)
     {
+        textoAtual = textToType;
         dialogueText.text = "";
         foreach (char letter in textToType.ToCharArray())
         {

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EnergyBlastAbility
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::EnergyBlastAbility
   nomeHabilidade: Nova Habilidade
-  dano: 20
+  dano: 10
   cooldown: 1
-  alcance: 5
+  alcance: 15
   prefabVFX: {fileID: 0}
-  prefabProjetil: {fileID: 0}
-  parametroAnimacao: 
+  prefabProjetil: {fileID: 100000000000000001, guid: 1edfca3c8c6364475b8b9efa66933437, type: 3}
+  parametroAnimacao: Tiro
   velocidadeProjetil: 12

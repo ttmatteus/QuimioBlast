@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DiffindoAbility
   nomeHabilidade: Nova Habilidade
   dano: 20
-  cooldown: 1
-  alcance: 5
+  cooldown: 5
+  alcance: 15
   prefabVFX: {fileID: 0}
-  prefabProjetil: {fileID: 0}
-  parametroAnimacao: 
+  prefabProjetil: {fileID: 100000000000000001, guid: 06da88e9478464117857844e54f124f8, type: 3}
+  parametroAnimacao: Diffindo
   velocidadeProjetil: 18

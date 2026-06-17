@@ -1,22 +1,21 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class PauseMenu : MonoBehaviour
 {
-    [Header("Referências de UI")]
+    [Header("Referï¿½ncias de UI")]
     [SerializeField] private GameObject pauseMenuUI; // Arraste o PauseMenuPanel aqui
 
     private bool isPaused = false;
 
     void Start()
     {
-        // Procura o Canvas que está no pai ou no próprio objeto
+        // Procura o Canvas que estï¿½ no pai ou no prï¿½prio objeto
         Canvas canvas = GetComponentInParent<Canvas>();
 
         if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceCamera)
         {
-            // Encontra automaticamente a câmera principal da nova cena e atribui ao Canvas
+            // Encontra automaticamente a cï¿½mera principal da nova cena e atribui ao Canvas
             canvas.worldCamera = Camera.main;
         }
     }
@@ -37,7 +36,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // Função para retomar o jogo (pública para o botão poder acessar)
+    // Funï¿½ï¿½o para retomar o jogo (pï¿½blica para o botï¿½o poder acessar)
     public void Resume()
     {
         pauseMenuUI.SetActive(false); // Esconde o menu
@@ -45,19 +44,18 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
     }
 
-    // Função para pausar o jogo
+    // Funï¿½ï¿½o para pausar o jogo
     void Pause()
     {
         pauseMenuUI.SetActive(true);  // Mostra o menu
-        Time.timeScale = 0f;          // Congela o tempo (física, animações independentes, etc.)
+        Time.timeScale = 0f;          // Congela o tempo (fï¿½sica, animaï¿½ï¿½es independentes, etc.)
         isPaused = true;
     }
 
-    // Função para fechar o jogo (pública para o botão poder acessar)
+    // Funï¿½ï¿½o para fechar o jogo (pï¿½blica para o botï¿½o poder acessar)
     public void QuitGame()
     {
         Debug.Log("Saindo do jogo..."); // Aparece no console para testar no editor
-        Time.timeScale = 1f; //Descongela o tempo antes de mudar de cena
-        SceneManager.LoadScene("InitialScene"); // Arraste ou digite o nome da cena do Menu Inicial
+        SceneTransition.Instance.LoadScene("MenuPrincipal");
     }
 }

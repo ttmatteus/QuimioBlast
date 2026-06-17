@@ -18,6 +18,8 @@ using System.Collections;
 
 [RequireComponent(typeof(Seeker))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement2D : MonoBehaviour
 {
     [Header("Velocidade")]
@@ -37,10 +39,25 @@ public class PlayerMovement2D : MonoBehaviour
     [Tooltip("Prefab instantâneo exibido onde o jogador clicou (opcional).")]
     public GameObject prefabMarcador;
 
+    // ── animação ─────────────────────────────────────────────────────────────
+    // IDs dos estados — os valores devem ser IGUAIS aos usados nas transições
+    // "Any State" do Animator Controller (parâmetro Int "Estado").
+    private const int EstadoAndandoFrente = 0; // S      → anda para baixo
+    private const int EstadoAndandoCosta  = 1; // W      → anda para cima
+    private const int EstadoAndandoLado   = 2; // A / D  → anda de lado (flipX inverte para a esquerda)
+    private const int EstadoParado        = 3; // idle — última direção foi A, S ou D
+    private const int EstadoParadoCostas  = 4; // idle — última direção foi W
+
+    // StringToHash evita comparar strings a cada frame (mais performático)
+    private static readonly int ParamEstado   = Animator.StringToHash("Estado");
+    private static readonly int ParamAtacando = Animator.StringToHash("Atacando");
+
     // ── internos ──────────────────────────────────────────────────────────────
-    private Seeker      seeker;
-    private Rigidbody2D rb;
-    private Camera      cam;
+    private Seeker        seeker;
+    private Rigidbody2D   rb;
+    private Camera        cam;
+    private Animator      animator;
+    private SpriteRenderer spriteRenderer;
 
     // WASD
     private Vector2 inputMovimento;
@@ -58,9 +75,11 @@ public class PlayerMovement2D : MonoBehaviour
 
     private void Awake()
     {
-        seeker = GetComponent<Seeker>();
-        rb     = GetComponent<Rigidbody2D>();
-        cam    = Camera.main;
+        seeker         = GetComponent<Seeker>();
+        rb             = GetComponent<Rigidbody2D>();
+        cam            = Camera.main;
+        animator       = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         rb.gravityScale = 0f;
         rb.constraints  = RigidbodyConstraints2D.FreezeRotation;
@@ -80,6 +99,8 @@ public class PlayerMovement2D : MonoBehaviour
         // Qualquer tecla direcional cancela o caminho atual
         if (inputMovimento != Vector2.zero && seguindoCaminho)
             CancelarCaminho();
+
+        AtualizarAnimacao();
     }
 
     private void FixedUpdate()
@@ -98,8 +119,16 @@ public class PlayerMovement2D : MonoBehaviour
 
     private void ProcessarInputWASD()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+        // Teclas explícitas (NÃO usar Input.GetAxisRaw): por padrão os eixos
+        // "Horizontal"/"Vertical" do Input Manager também respondem às setas,
+        // e as setas agora são reservadas para os golpes (CombatManager).
+        float x = 0f;
+        float y = 0f;
+
+        if (Input.GetKey(KeyCode.D)) x += 1f;
+        if (Input.GetKey(KeyCode.A)) x -= 1f;
+        if (Input.GetKey(KeyCode.W)) y += 1f;
+        if (Input.GetKey(KeyCode.S)) y -= 1f;
 
         if (x != 0)
         {
@@ -130,13 +159,67 @@ public class PlayerMovement2D : MonoBehaviour
         rb.linearVelocity = inputMovimento.normalized * velocidade;
     }
 
+    // ── Animação ─────────────────────────────────────────────────────────────
+
+    // Decide qual animação tocar de acordo com a direção atual de movimento e,
+    // se o personagem estiver parado, com a última direção registrada em
+    // "UltimaDirecao" (atualizada em ProcessarInputWASD a cada tecla W/A/S/D).
+    private void AtualizarAnimacao()
+    {
+        // Prioriza o input de teclado deste frame; se não houver (ex.: durante
+        // o click-to-move), usa a velocidade atual do Rigidbody2D — assim a
+        // animação também acompanha o modo "andar até o clique".
+        Vector2 direcao = inputMovimento != Vector2.zero
+            ? inputMovimento
+            : rb.linearVelocity;
+
+        bool movendo = direcao.sqrMagnitude > 0.01f;
+
+        if (movendo)
+        {
+            if (Mathf.Abs(direcao.x) > Mathf.Abs(direcao.y))
+            {
+                // Movimento horizontal: "AndandoLado" serve para A e D —
+                // o flipX espelha o sprite quando a direção é para a esquerda.
+                animator.SetInteger(ParamEstado, EstadoAndandoLado);
+                spriteRenderer.flipX = direcao.x < 0f;
+            }
+            else if (direcao.y > 0f)
+            {
+                animator.SetInteger(ParamEstado, EstadoAndandoCosta);  // W
+            }
+            else
+            {
+                animator.SetInteger(ParamEstado, EstadoAndandoFrente); // S
+            }
+        }
+        else
+        {
+            // Parado: a pose depende de qual tecla direcional foi pressionada
+            // por último. "flipX" não é alterado aqui — mantém o espelhamento
+            // de quando o personagem estava andando de lado.
+            bool ultimaFoiParaCima = UltimaDirecao.y > 0f
+                                  && Mathf.Abs(UltimaDirecao.y) > Mathf.Abs(UltimaDirecao.x);
+
+            animator.SetInteger(ParamEstado, ultimaFoiParaCima ? EstadoParadoCostas : EstadoParado);
+        }
+    }
+
+    // Chamado por um Animation Event no ÚLTIMO frame de cada animação de
+    // ataque (Soco, Tiro, Accio, Depulso, Diffindo, Confringo). Libera o bool
+    // "Atacando" para que as transições de movimento voltem a funcionar.
+    public void FinalizarAtaque()
+    {
+        animator.SetBool(ParamAtacando, false);
+    }
+
     // ── Double-tap Dash ───────────────────────────────────────────────────────
 
     private void VerificarDoubleTap()
     {
+        // Setas removidas do double-tap: agora são teclas exclusivas de combate.
         KeyCode[] teclas = {
-            KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D,
-            KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow
+            KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D
         };
 
         foreach (KeyCode tecla in teclas)
@@ -244,6 +327,13 @@ public class PlayerMovement2D : MonoBehaviour
         seguindoCaminho   = false;
         caminhoAtual      = null;
         rb.linearVelocity = Vector2.zero;
+
+        // Aborta o cálculo em andamento na thread do A*. Sem isso, um path
+        // ainda sendo processado mantém a thread de pathfinding ocupada e,
+        // ao recarregar a cena (Game Over > Tentar Novamente), o AstarPath
+        // antigo trava o thread principal em OnDestroy esperando essa thread
+        // terminar — congelando o Editor sem nenhum erro no Console.
+        seeker.CancelCurrentPathRequest();
     }
 
     private void MostrarMarcador(Vector3 posicao)

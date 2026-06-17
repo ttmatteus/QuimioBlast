@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DepulsoAbility
   nomeHabilidade: Nova Habilidade
   dano: 20
-  cooldown: 1
+  cooldown: 3
   alcance: 5
   prefabVFX: {fileID: 0}
   prefabProjetil: {fileID: 0}
-  parametroAnimacao: 
+  parametroAnimacao: Depulso
   forcaRepulsao: 25
+  tempoAtordoamento: 0.5

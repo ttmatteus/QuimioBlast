@@ -103,10 +103,10 @@ TextureImporter:
       name: PocaoInvisibilidade_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 9
-        width: 92
-        height: 132
+        x: 0
+        y: 0
+        width: 109
+        height: 221
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: Leo_No2_1
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: Leonardo
+  dialogueText: "Estes controlam sua estrutura de integridade f\xEDsica. A solu\xE7\xE3o\
+    \ Vermelha \xE9 uma sub-rotina de restaura\xE7\xE3o total: ela limpa todos os\
+    \ seus registradores de dano, realoca seus recursos e cura toda a sua vida instantaneamente.\
+    \ J\xE1 a solu\xE7\xE3o Rosa \xE9 um patch incremental de baixo custo de processamento:\
+    \ ela cura apenas um pouco da sua vida, uma aloca\xE7\xE3o r\xE1pida para momentos\
+    \ de pressa onde voc\xEA n\xE3o pode gastar muita largura de banda."
+  choices:
+  - choiceText: "E os outros dois frascos? O Preto e o Azul?"
+    nextNode: {fileID: 11400000, guid: a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8, type: 2}
+  - choiceText: "Eles parecem \xFAteis. Pode me fornecer alguns?"
+    nextNode: {fileID: 11400000, guid: b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []

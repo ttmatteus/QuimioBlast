@@ -6,10 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Core/InitialScene.unity
+    path: Assets/Scenes/Core/MenuPrincipal.unity
     guid: df4f69df3a45b944ca40d8e90f54c2b6
   - enabled: 1
-    path: Assets/Scenes/Core/GameScene.unity
+    path: Assets/Scenes/Core/CenaInicial.unity
+    guid: d2c76b836469c44a2839f901b63c8630
+  - enabled: 1
+    path: Assets/Scenes/Core/PrimeiraFaseNormal.unity
     guid: 1f9c20a32468f034fa5c8dd82424e259
+  - enabled: 1
+    path: Assets/Scenes/Core/PrimeiraFaseBoss.unity
+    guid: feb3ca4123cbf487c8c782d2611ce911
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -21,7 +21,7 @@ public class MeleeAbility : AbilityBase
         // Aplica dano
         EnemyBase inimigo = alvo.GetComponent<EnemyBase>();
         if (inimigo != null)
-            inimigo.TakeDamage(dano);
+            inimigo.TakeDamage(dano, owner.transform.position);
 
         // VFX no ponto de impacto
         if (prefabVFX != null)

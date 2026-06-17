@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::AccioAbility
   nomeHabilidade: Nova Habilidade
   dano: 20
-  cooldown: 1
+  cooldown: 3
   alcance: 5
   prefabVFX: {fileID: 0}
   prefabProjetil: {fileID: 0}
-  parametroAnimacao: 
+  parametroAnimacao: Accio
   forcaPuxao: 20
   tempoAtordoamento: 2

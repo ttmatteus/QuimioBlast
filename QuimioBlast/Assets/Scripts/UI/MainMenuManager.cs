@@ -1,44 +1,46 @@
 using UnityEngine;
-using UnityEngine.SceneManagement; // Necessário para carregar cenas
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header("Painéis do Menu")]
+    [Header("Painï¿½is do Menu")]
     [SerializeField] private GameObject menuInicialPanel;
     [SerializeField] private GameObject creditosPanel;
 
-    [Header("Configuração de Cenas")]
+    [Header("Configuraï¿½ï¿½o de Cenas")]
     [SerializeField] private string nomeDaCenaDoJogo; // Digite o nome exato da sua cena principal aqui
 
     void Start()
     {
-        // Garante que o menu começa na tela inicial e os créditos escondidos
+        // Aplica o design robÃ³tico nos crÃ©ditos caso o componente nÃ£o esteja no prefab
+        if (creditosPanel != null && !creditosPanel.TryGetComponent<CreditosPanelDesign>(out _))
+            creditosPanel.AddComponent<CreditosPanelDesign>();
+
         menuInicialPanel.SetActive(true);
         creditosPanel.SetActive(false);
     }
 
-    // Chamado pelo botão "Jogar"
+    // Chamado pelo botï¿½o "Jogar"
     public void Jogar()
     {
         // Carrega a cena principal do seu jogo
-        SceneManager.LoadScene(nomeDaCenaDoJogo);
+        SceneTransition.Instance.LoadScene(nomeDaCenaDoJogo);
     }
 
-    // Chamado pelo botão "Créditos"
+    // Chamado pelo botï¿½o "Crï¿½ditos"
     public void AbrirCreditos()
     {
         menuInicialPanel.SetActive(false);
         creditosPanel.SetActive(true);
     }
 
-    // Chamado pelo botão "Voltar" dentro da tela de créditos
+    // Chamado pelo botï¿½o "Voltar" dentro da tela de crï¿½ditos
     public void FecharCreditos()
     {
         creditosPanel.SetActive(false);
         menuInicialPanel.SetActive(true);
     }
 
-    // Chamado pelo botão "Sair" (Fecha o jogo)
+    // Chamado pelo botï¿½o "Sair" (Fecha o jogo)
     public void SairDoJogo()
     {
         Debug.Log("Fechando o aplicativo...");

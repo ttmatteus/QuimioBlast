@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public abstract class EnemyBase : MonoBehaviour
@@ -10,8 +11,28 @@ public abstract class EnemyBase : MonoBehaviour
     [Header("detecção")]
     public float detectionRange = 10f;
 
-    [Header("renascimento")]
-    public float tempoRenascimento = 3f;
+    [Header("knockback")]
+    [Tooltip("Força do recuo leve ao receber dano de Soco, Confringo, Diffindo ou Tiro.")]
+    public float forcaKnockback = 4f;
+
+    [Tooltip("Duração do atordoamento causado pelo recuo, em segundos.")]
+    public float duracaoKnockback = 0.15f;
+
+    [Header("Drop de Itens")]
+    [Tooltip("Prefabs de poção que podem ser dropados ao morrer.")]
+    public GameObject[] prefabsDrop;
+    [Range(0f, 1f)]
+    [Tooltip("Probabilidade de dropar um item (0 = nunca, 1 = sempre).")]
+    public float chanceDrop = 0.35f;
+
+    // ── Barra de Vida Flutuante (World Space) ───────────────────────────────────
+    [Header("Barra de Vida")]
+    [Tooltip("Canvas filha do inimigo configurada em modo World Space.")]
+    public Canvas canvasVida;
+    [Tooltip("Slider dentro da Canvas que representa a vida atual.")]
+    public Slider sliderVida;
+    [Tooltip("Distância em unidades acima do centro do inimigo onde a barra aparece.")]
+    public float alturaOffsetVida = 1f;
 
     [Header("indicador de alvo")]
     [SerializeField] private float raioIndicador = 0.6f;
@@ -22,35 +43,44 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected bool isDead = false;
 
-    private Vector3          posicaoInicial;
+    private Rigidbody2D      rbKnockback;
     private SpriteRenderer[] spriteRenderers;
-    private Color[]          coresOriginais;
     private Coroutine        flashCoroutine;
-    private LineRenderer     indicadorAlvo;
+    private GameObject       paiIndicador;
+    private LineRenderer[]   indicadorAlvo;
     private Material         materialIndicador;
 
-    // MaterialPropertyBlock para o flash — independente do Animator e do material do inimigo
     private MaterialPropertyBlock    flashBlock;
     private static readonly int      ColorId = Shader.PropertyToID("_Color");
 
-    // Duração total do flash (3 piscadas × (0.08 + 0.06))
     private const float DuracaoFlash = 3 * (0.08f + 0.06f);
 
     public bool IsDead => isDead;
 
     protected virtual void Start()
     {
-        currentHealth  = maxHealth;
-        posicaoInicial = transform.position;
+        currentHealth = maxHealth;
+
+        rbKnockback = GetComponent<Rigidbody2D>();
 
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        coresOriginais  = new Color[spriteRenderers.Length];
-        for (int i = 0; i < spriteRenderers.Length; i++)
-            coresOriginais[i] = spriteRenderers[i].color;
 
         flashBlock = new MaterialPropertyBlock();
 
         CriarIndicadorAlvo();
+
+        if (canvasVida != null)
+        {
+            canvasVida.transform.localPosition = new Vector3(0f, alturaOffsetVida, 0f);
+            canvasVida.transform.localRotation = Quaternion.identity;
+        }
+
+        if (sliderVida != null)
+        {
+            sliderVida.minValue = 0f;
+            sliderVida.maxValue = maxHealth;
+            sliderVida.value    = currentHealth;
+        }
 
         if (player == null)
         {
@@ -64,44 +94,57 @@ public abstract class EnemyBase : MonoBehaviour
 
     private void CriarIndicadorAlvo()
     {
-        var go = new GameObject("IndicadorAlvo");
-        go.transform.SetParent(transform);
-        go.transform.localPosition = Vector3.zero;
-
-        indicadorAlvo = go.AddComponent<LineRenderer>();
-        indicadorAlvo.useWorldSpace = false;
-        indicadorAlvo.loop          = true;
-        indicadorAlvo.startWidth    = 0.06f;
-        indicadorAlvo.endWidth      = 0.06f;
-        indicadorAlvo.sortingOrder  = 10;
-
-        // Tenta o shader URP primeiro, cai no built-in como fallback
         Shader shader = Shader.Find("Universal Render Pipeline/2D/Sprite-Unlit-Default")
                      ?? Shader.Find("Sprites/Default");
+        materialIndicador = new Material(shader);
 
-        materialIndicador      = new Material(shader);
-        indicadorAlvo.material = materialIndicador;
-        indicadorAlvo.startColor = corIndicador;
-        indicadorAlvo.endColor   = corIndicador;
+        var srInimigo = GetComponentInChildren<SpriteRenderer>();
+        int sortLayer = srInimigo != null ? srInimigo.sortingLayerID : 0;
 
-        const int segmentos = 32;
-        indicadorAlvo.positionCount = segmentos;
-        for (int i = 0; i < segmentos; i++)
+        paiIndicador = new GameObject("IndicadorMira");
+        paiIndicador.transform.SetParent(transform);
+        paiIndicador.transform.localPosition = Vector3.zero;
+        paiIndicador.AddComponent<RotadorMira>();
+        paiIndicador.SetActive(false);
+
+        float s = raioIndicador;
+        float l = s * 0.45f;
+
+        Vector3[][] cantos = {
+            new[] { new Vector3(-s + l,  s, 0f), new Vector3(-s,  s, 0f), new Vector3(-s,  s - l, 0f) },
+            new[] { new Vector3( s - l,  s, 0f), new Vector3( s,  s, 0f), new Vector3( s,  s - l, 0f) },
+            new[] { new Vector3( s - l, -s, 0f), new Vector3( s, -s, 0f), new Vector3( s, -s + l, 0f) },
+            new[] { new Vector3(-s + l, -s, 0f), new Vector3(-s, -s, 0f), new Vector3(-s, -s + l, 0f) },
+        };
+
+        indicadorAlvo = new LineRenderer[4];
+        for (int i = 0; i < 4; i++)
         {
-            float angulo = i / (float)segmentos * Mathf.PI * 2f;
-            indicadorAlvo.SetPosition(i, new Vector3(
-                Mathf.Cos(angulo) * raioIndicador,
-                Mathf.Sin(angulo) * raioIndicador,
-                0f));
-        }
+            var go = new GameObject($"Canto_{i}");
+            go.transform.SetParent(paiIndicador.transform);
+            go.transform.localPosition = Vector3.zero;
 
-        indicadorAlvo.enabled = false;
+            var lr = go.AddComponent<LineRenderer>();
+            lr.useWorldSpace  = false;
+            lr.loop           = false;
+            lr.startWidth     = 0.06f;
+            lr.endWidth       = 0.06f;
+            lr.sortingLayerID = sortLayer;
+            lr.sortingOrder   = 10;
+            lr.material       = materialIndicador;
+            lr.startColor     = corIndicador;
+            lr.endColor       = corIndicador;
+            lr.positionCount  = 3;
+            lr.SetPositions(cantos[i]);
+
+            indicadorAlvo[i] = lr;
+        }
     }
 
     public void MarcarComoAlvo(bool marcado)
     {
-        if (indicadorAlvo != null)
-            indicadorAlvo.enabled = marcado;
+        if (paiIndicador != null)
+            paiIndicador.SetActive(marcado);
     }
 
     private void OnDestroy()
@@ -110,18 +153,31 @@ public abstract class EnemyBase : MonoBehaviour
             Destroy(materialIndicador);
     }
 
-    // ── dano / morte / renascimento ───────────────────────────────────────────
+    // ── dano / morte ──────────────────────────────────────────────────────────
 
     public virtual void TakeDamage(float amount)
     {
         if (isDead) return;
         currentHealth -= amount;
+        AtualizarSlider();
 
-        // Reinicia o flash a cada hit
         if (flashCoroutine != null) StopCoroutine(flashCoroutine);
         flashCoroutine = StartCoroutine(FlashDano());
 
         if (currentHealth <= 0f) Die();
+    }
+
+    public virtual void TakeDamage(float amount, Vector2 origemDano)
+    {
+        TakeDamage(amount);
+        if (isDead || rbKnockback == null) return;
+
+        Vector2 direcao = (Vector2)transform.position - origemDano;
+        if (direcao == Vector2.zero) direcao = Vector2.up;
+        direcao.Normalize();
+
+        Atordoar(duracaoKnockback);
+        rbKnockback.linearVelocity = direcao * forcaKnockback;
     }
 
     private IEnumerator FlashDano()
@@ -132,7 +188,6 @@ public abstract class EnemyBase : MonoBehaviour
 
         for (int i = 0; i < numPiscos; i++)
         {
-            // MaterialPropertyBlock substitui SpriteRenderer.color — funciona mesmo com Animator
             AplicarCorMPB(Color.red);
             yield return new WaitForSeconds(tempoVerm);
             LimparMPB();
@@ -171,21 +226,32 @@ public abstract class EnemyBase : MonoBehaviour
         isDead = true;
         MarcarComoAlvo(false);
 
-        // Desativa colisão imediatamente para não receber mais dano enquanto morre
+        if (canvasVida != null)
+            canvasVida.gameObject.SetActive(false);
+
         foreach (var c in GetComponentsInChildren<Collider2D>())
             c.enabled = false;
 
-        // NÃO cancela o flash — o inimigo pisca e depois some
-        StartCoroutine(CorotinaRenascimento());
+        TentarDrop();
+        StartCoroutine(CorotinasMorte());
     }
 
-    private IEnumerator CorotinaRenascimento()
+    private void TentarDrop()
     {
-        // Aguarda o flash terminar para que a morte seja visualmente confirmada
+        if (prefabsDrop == null || prefabsDrop.Length == 0) return;
+        if (Random.value > chanceDrop) return;
+
+        GameObject prefab = prefabsDrop[Random.Range(0, prefabsDrop.Length)];
+        if (prefab != null)
+            Instantiate(prefab, transform.position, Quaternion.identity);
+    }
+
+    private IEnumerator CorotinasMorte()
+    {
+        // Aguarda o flash terminar para confirmar a morte visualmente
         if (flashCoroutine != null)
             yield return new WaitForSeconds(DuracaoFlash);
 
-        // Limpa flash e esconde sprite
         if (flashCoroutine != null)
         {
             StopCoroutine(flashCoroutine);
@@ -193,33 +259,14 @@ public abstract class EnemyBase : MonoBehaviour
         }
         LimparMPB();
 
-        foreach (var r in spriteRenderers)
-            if (r != null) r.enabled = false;
-
-        yield return new WaitForSeconds(tempoRenascimento);
-
-        transform.position = posicaoInicial;
-        currentHealth      = maxHealth;
-        isDead             = false;
-
-        foreach (var r in spriteRenderers)
-            if (r != null) r.enabled = true;
-        foreach (var c in GetComponentsInChildren<Collider2D>())
-            c.enabled = true;
-
-        // Garante que não há cor residual de flash ao renascer
-        LimparMPB();
-        RestaurarCores();
-        OnRenascer();
+        Destroy(gameObject);
     }
 
-    private void RestaurarCores()
+    private void AtualizarSlider()
     {
-        for (int i = 0; i < spriteRenderers.Length; i++)
-            if (spriteRenderers[i] != null) spriteRenderers[i].color = coresOriginais[i];
+        if (sliderVida != null)
+            sliderVida.value = Mathf.Max(0f, currentHealth);
     }
-
-    protected virtual void OnRenascer() { }
 
     protected float DistanceToPlayer()
     {
@@ -232,4 +279,9 @@ public abstract class EnemyBase : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
+}
+
+public class RotadorMira : MonoBehaviour
+{
+    private void Update() => transform.Rotate(0f, 0f, 60f * Time.deltaTime);
 }

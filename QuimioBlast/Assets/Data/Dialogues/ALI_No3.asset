@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: ALI_No3_0_Veredito
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: ALI
+  dialogueText: "A Grande Matriz monitora a topologia deste mundo como um grafo de controle de fluxo. No momento em que voc\xEA deixar este vale seguro, voc\xEA se tornar\xE1 uma anomalia no sistema dela. Os Sentinelas far\xE3o a varredura para deletar o seu processo. N\xE3o vacile, pequeno aut\xF4mato. V\xE1 ao Laborat\xF3rio Central. Fale com os Alquimistas. Descubra onde o primeiro General est\xE1 alocado."
+  choices:
+  - choiceText: "[Finalizar Di\xE1logo] Inicializando busca pelo primeiro fragmento."
+    nextNode: {fileID: 11400000, guid: d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []

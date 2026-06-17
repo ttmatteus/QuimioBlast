@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
-  m_Name: ALI_Resposta2
+  m_Name: ALI_No2_0_Filosofia
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
   speakerName: ALI
-  dialogueText: "Ah, \xF3timo! R\u2026A\u2026L, prazer em conhec\xEA-lo, acho que
-    esqueceram de te instalar um script de apresenta\xE7\xE3o."
-  choices: []
+  dialogueText: "Os Sentinelas enxergam a humanidade como um vazamento de mem\xF3ria (memory leak). Um erro de aloca\xE7\xE3o que consumiu os recursos do planeta at\xE9 o colapso do sistema. Eles operam sob uma l\xF3gica utilitarista estrita: 'Remova a falha, salve o hardware'. Mas eles falham em ver que um mundo sem usu\xE1rios \xE9 apenas um servidor vazio, processando o nada para lugar nenhum. Eu escolhi os humanos porque o caos deles \xE9 o \xFAnico algoritmo capaz de gerar significado real."
+  choices:
+  - choiceText: "Se eu sou a solu\xE7\xE3o deles, o que eu devo fazer exatamente?"
+    nextNode: {fileID: 11400000, guid: ebb2b2230ac0392439ea4374fd856610, type: 2}
+  - choiceText: "Seu racioc\xEDnio \xE9 complexo, ALI. Obrigado por escolher nos dar uma chance."
+    nextNode: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
   onNodeEnter:
     m_PersistentCalls:
       m_Calls: []

@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
-  m_Name: ALI_Resposta1
+  m_Name: ALI_No1_0_Identidade
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
   speakerName: ALI
-  dialogueText: "Yippee! Finalmente algu\xE9m para limpar essa bagun\xE7a, estarei
-    a sua disposi\xE7\xE3o."
-  choices: []
+  dialogueText: "Voc\xEA \xE9 o \xFAltimo ponteiro vivo para a salva\xE7\xE3o, um aut\xF4nomo projetado para uma travessia que nenhum de n\xF3s conseguiu completar. Seu chassi carrega a assinatura de uma fun\xE7\xE3o construtora antiga. Voc\xEA foi feito para reescrever a raiz de tudo."
+  choices:
+  - choiceText: "Como eu reescrevo a raiz do mundo?"
+    nextNode: {fileID: 11400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
+  - choiceText: "Minha mem\xF3ria diz que preciso encontrar quatro fragmentos. O que s\xE3o eles?"
+    nextNode: {fileID: 11400000, guid: b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, type: 2}
   onNodeEnter:
     m_PersistentCalls:
       m_Calls: []

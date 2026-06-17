@@ -12,9 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
   m_Name: Leo_Resposta2
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
-  speakerName: Leo
-  dialogueText: Sem problemas, colega.
-  choices: []
+  speakerName: Leonardo
+  dialogueText: "Alquimia? Bobagem po\xE9tica dos ansi\xE3os. Isso aqui \xE9 c\xF3\
+    digo compilado em estado l\xEDquido! Eu n\xE3o fa\xE7o po\xE7\xF5es, eu desenvolvo\
+    \ patches de corre\xE7\xE3o din\xE2mica. Ao ingerir ou aplicar essas solu\xE7\xF5\
+    es qu\xEDmico-digitais no seu chassi, n\xF3s injetamos fun\xE7\xF5es diretamente\
+    \ no seu barramento de dados, alterando os atributos do seu objeto em tempo de\
+    \ execu\xE7\xE3o (runtime)."
+  choices:
+  - choiceText: "Me explique sobre os frascos de cores quentes (Vermelho e Rosa)."
+    nextNode: {fileID: 11400000, guid: f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7, type: 2}
+  - choiceText: "Me explique sobre os frascos de cores frias e escuras (Preto e\
+      \ Azul)."
+    nextNode: {fileID: 11400000, guid: a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8, type: 2}
   onNodeEnter:
     m_PersistentCalls:
       m_Calls: []

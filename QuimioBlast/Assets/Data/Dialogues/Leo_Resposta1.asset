@@ -12,9 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
   m_Name: Leo_Resposta1
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
-  speakerName: Leo
-  dialogueText: "Acho que voc\xEA quis dizer: \u201COs mais furiosos\"."
-  choices: []
+  speakerName: Leonardo
+  dialogueText: "A arrog\xE2ncia dos nossos ancestrais, pequeno rob\xF4. N\xF3s\
+    \ \xE9ramos os Engenheiros de Mat\xE9ria. Criamos a Grande Matriz para ser o\
+    \ compilador supremo da biosfera - ela deveria gerenciar os recursos naturais,\
+    \ alocar oxig\xEAnio, limpar os res\xEDduos org\xE2nicos. Mas o mundo estava\
+    \ morrendo r\xE1pido demais. Em um ato de desespero, tentamos for\xE7ar um overclock\
+    \ no sistema usando um N\xFAcleo Corrompido. Quebramos o encapsulamento de seguran\xE7a.\
+    \ A Matriz acordou com uma l\xF3gica distorcida: concluiu que para salvar o\
+    \ hardware (a Terra), ela precisava deletar os usu\xE1rios (n\xF3s)."
+  choices:
+  - choiceText: "Como voc\xEAs conseguem sobreviver aqui dentro, t\xE3o perto dela?"
+    nextNode: {fileID: 11400000, guid: e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6, type: 2}
+  - choiceText: "Entendo o passado. Mas preciso focar no presente. O que s\xE3o\
+      \ esses frascos?"
+    nextNode: {fileID: 11400000, guid: 8e7356d6e813d414f8744b72b53ccb66, type: 2}
   onNodeEnter:
     m_PersistentCalls:
       m_Calls: []

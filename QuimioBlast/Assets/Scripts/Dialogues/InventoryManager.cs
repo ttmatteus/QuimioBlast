@@ -38,7 +38,7 @@ public class InventoryManager : MonoBehaviour
     private readonly List<EntradaInventario> slots = new List<EntradaInventario>(MaxSlots);
 
     // A InventoryHUD escuta este evento para redesenhar a interface
-    public System.Action OnInventarioAtualizado;
+    public static event System.Action OnInventarioAtualizado;
 
     private PlayerHealth saude;
 
@@ -53,6 +53,18 @@ public class InventoryManager : MonoBehaviour
         }
         Instancia = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    // Limpa a referência estática ANTES de destruir o GameObject. Destroy()
+    // só é efetivado no fim do frame: ao recarregar a cena (LoadScene
+    // síncrono) no mesmo frame, o Awake() do novo Player ainda veria
+    // "Instancia" preenchida (apontando para este objeto) e se autodestruiria
+    // também, deixando a cena sem nenhum Player.
+    public void DestruirSingleton()
+    {
+        if (Instancia == this)
+            Instancia = null;
+        Destroy(gameObject);
     }
 
     private void Start()
@@ -135,6 +147,12 @@ public class InventoryManager : MonoBehaviour
     /// <returns>True se o item foi adicionado com sucesso.</returns>
     public bool AdicionarItem(ItemData item)
     {
+        if (item == null)
+        {
+            Debug.LogWarning("[InventoryManager] Tentativa de adicionar item nulo — verifique as referências do LeoReward no Inspector.");
+            return false;
+        }
+
         // Verifica se este tipo de item já existe e empilha
         EntradaInventario entradaExistente = slots.Find(e => e.itemData == item);
         if (entradaExistente != null)

@@ -13,6 +13,7 @@ public class Projectile2D : MonoBehaviour
     private float   dano;
     private float   distanciaMaxima;
     private Vector3 posicaoInicial;
+    private bool    atingirJogador;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -24,10 +25,12 @@ public class Projectile2D : MonoBehaviour
 
     // Chamado pela habilidade logo após a instanciação.
     // ownerCollider: collider do dono para ignorar colisão imediata com ele mesmo.
-    public void Inicializar(Vector2 direcao, float dano, float velocidade, float distanciaMaxima, Collider2D ownerCollider = null)
+    // atingirJogador: true quando disparado por inimigos — acerta PlayerHealth em vez de EnemyBase.
+    public void Inicializar(Vector2 direcao, float dano, float velocidade, float distanciaMaxima, Collider2D ownerCollider = null, bool atingirJogador = false)
     {
         this.dano            = dano;
         this.distanciaMaxima = distanciaMaxima;
+        this.atingirJogador  = atingirJogador;
         posicaoInicial       = transform.position;
 
         rb.linearVelocity = direcao * velocidade;
@@ -51,12 +54,23 @@ public class Projectile2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // GetComponentInParent funciona mesmo quando o Collider2D está num filho do inimigo
-        EnemyBase inimigo = other.GetComponentInParent<EnemyBase>();
-        if (inimigo != null)
+        if (atingirJogador)
         {
-            inimigo.TakeDamage(dano);
-            Destroy(gameObject);
+            PlayerHealth jogador = other.GetComponentInParent<PlayerHealth>();
+            if (jogador != null)
+            {
+                jogador.ReceberDano(dano);
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            EnemyBase inimigo = other.GetComponentInParent<EnemyBase>();
+            if (inimigo != null)
+            {
+                inimigo.TakeDamage(dano, transform.position);
+                Destroy(gameObject);
+            }
         }
     }
 }

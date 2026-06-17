@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4149798289318843092}
   - component: {fileID: 8174348247025344382}
   - component: {fileID: 3298224789150496452}
+  - component: {fileID: 1230616746977437024}
   m_Layer: 0
   m_Name: NPC_Reko
   m_TagString: Untagged
@@ -81,10 +82,10 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0.8431373, b: 0, a: 1}
+  m_Sprite: {fileID: -5274461400705001295, guid: 77fba36484bc045739030368297f1a06, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -142,3 +143,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNPC
   noInicial: {fileID: 11400000, guid: fe8f7b73c29967149940fffda4cad66f, type: 2}
+  interactionPrompt: {fileID: 0}
+--- !u!111 &1230616746977437024
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8945844903973227451}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 2f9a7f25491894baba0b558020688143, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0

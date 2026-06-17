@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: Reko_No3
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: Reko
+  dialogueText: "Excelente. Lembre-se: em uma batalha real, suas decis\xF5es s\xE3o\
+    \ inseridas em uma Fila de Execu\xE7\xE3o. Se voc\xEA pressionar os comandos\
+    \ sem timing, seu buffer pode estourar e voc\xEA ficar\xE1 vulner\xE1vel. Alterne\
+    \ entre o controle de dist\xE2ncia com as setas - empurrando com Depulso ou puxando\
+    \ com Accio - e finalize com seus golpes f\xEDsicos ou elementais. O combate n\xE3o\
+    \ \xE9 caos, pequeno aut\xF4mato... \xE9 uma fun\xE7\xE3o matem\xE1tica onde\
+    \ o resultado final deve ser a destrui\xE7\xE3o do processo inimigo."
+  choices:
+  - choiceText: "[Finalizar Di\xE1logo] Sistemas de combate calibrados. Pronto para\
+      \ o teste de campo."
+    nextNode: {fileID: 11400000, guid: d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []

@@ -13,9 +13,20 @@ MonoBehaviour:
   m_Name: Reko_Resposta2
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
   speakerName: Reko
-  dialogueText: "Olha, eu n\xE3o fiz nada. Roer fios nem \xE9 t\xE3o ruim assim.
-    N\xE9?"
-  choices: []
+  dialogueText: "As setas do teclado controlam a geometria do campo. CIMA [Depulso]:\
+    \ descarga cin\xE9tica que afasta o inimigo para longe, essencial para limpar\
+    \ sua \xE1rea de colis\xE3o quando voc\xEA estiver sobrecarregado. BAIXO [Accio]:\
+    \ inverte o vetor de atra\xE7\xE3o, puxando o inimigo at\xE9 voc\xEA - ideal\
+    \ para trazer atiradores ao alcance do seu soco. DIREITA [Diffindo]: corte de\
+    \ ar de longo alcance, dano cortante puro \xE0 dist\xE2ncia segura. ESQUERDA\
+    \ [Confringo]: alquimia t\xE9rmica de curto escopo, bola de fogo de alto impacto\
+    \ e dano massivo."
+  choices:
+  - choiceText: "Pode repetir as fun\xE7\xF5es das teclas Q e E?"
+    nextNode: {fileID: 11400000, guid: d1ea18d323dccb642bf230c04bbc2209, type: 2}
+  - choiceText: "O controle do espa\xE7o e dos elementos est\xE1 l\xF3gico na minha\
+      \ matriz. Estou pronto."
+    nextNode: {fileID: 11400000, guid: c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6, type: 2}
   onNodeEnter:
     m_PersistentCalls:
       m_Calls: []

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: Leo_No2_2
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: Leonardo
+  dialogueText: "Estes alteram as vari\xE1veis de ambiente e f\xEDsica. A solu\xE7\xE3o\
+    \ Preta aplica um algoritmo de oculta\xE7\xE3o profunda na sua assinatura de\
+    \ rede: ela mascara suas propriedades de colis\xE3o, tornando voc\xEA completamente\
+    \ invis\xEDvel para os inimigos. Os Sentinelas v\xE3o passar direto pelo seu\
+    \ processo sem disparar o gatilho de ataque. E a solu\xE7\xE3o Azul realiza\
+    \ um overclock tempor\xE1rio nos seus atuadores mec\xE2nicos, aumentando drasticamente\
+    \ sua velocidade. Excelente para escapar de loops de persegui\xE7\xE3o travados\
+    \ pelos guardas."
+  choices:
+  - choiceText: "Compreendo. E as po\xE7\xF5es Vermelha e Rosa, o que faziam mesmo?"
+    nextNode: {fileID: 11400000, guid: f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7, type: 2}
+  - choiceText: "Vou precisar de todas elas se quiser sobreviver l\xE1 fora."
+    nextNode: {fileID: 11400000, guid: b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []

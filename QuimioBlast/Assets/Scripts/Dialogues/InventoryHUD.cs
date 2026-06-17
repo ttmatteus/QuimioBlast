@@ -56,23 +56,23 @@ public class InventoryHUD : MonoBehaviour
 
     // ── ciclo de vida ─────────────────────────────────────────────────────────
 
+    private void OnEnable()
+    {
+        InventoryManager.OnInventarioAtualizado += AtualizarHUD;
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.OnInventarioAtualizado -= AtualizarHUD;
+    }
+
     private void Start()
     {
-        // Inscreve no evento do InventoryManager para redesenhar quando necessário
-        if (InventoryManager.Instancia != null)
-            InventoryManager.Instancia.OnInventarioAtualizado += AtualizarHUD;
-
         // Preenche os labels de atalho (Z, X, C, V) — fixos, nunca mudam
         for (int i = 0; i < InventoryManager.MaxSlots; i++)
             if (textosAtalho[i] != null) textosAtalho[i].text = Atalhos[i];
 
         AtualizarHUD();
-    }
-
-    private void OnDestroy()
-    {
-        if (InventoryManager.Instancia != null)
-            InventoryManager.Instancia.OnInventarioAtualizado -= AtualizarHUD;
     }
 
     // ── desenho ───────────────────────────────────────────────────────────────
@@ -105,7 +105,7 @@ public class InventoryHUD : MonoBehaviour
         if (imagensSlots[i] != null)
         {
             imagensSlots[i].sprite = entrada.itemData.icone;
-            imagensSlots[i].color  = Color.white;
+            imagensSlots[i].color  = entrada.itemData.icone != null ? Color.white : corSlotVazio;
         }
 
         if (textosQuantidade[i] != null)

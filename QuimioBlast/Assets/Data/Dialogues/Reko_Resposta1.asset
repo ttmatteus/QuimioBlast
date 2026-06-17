@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: Reko_Resposta1
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
   speakerName: Reko
-  dialogueText: "Ah, entendi. Boa sorte, rob\xF4."
-  choices: []
+  dialogueText: "Seus comandos mais diretos est\xE3o mapeados nos registradores alfanum\xE9ricos
+    de alta velocidade. Ataques f\xEDsicos e bal\xEDsticos simples. Pressione Q para
+    executar um Soco: fun\xE7\xE3o de curto alcance, for\xE7a bruta direta para quebrar
+    a lat\xEAncia do inimigo. Pressione E para disparar um Tiro de baixo dano: proj\xE9til
+    simples que interrompe o fluxo de processamento de alvos distantes enquanto voc\xEA
+    calcula seu pr\xF3ximo movimento. Al\xE9m disso, ao clicar duas vezes em um bot\xE3o
+    de movimento, voc\xEA dar\xE1 um pequeno dash nessa dire\xE7\xE3o."
+  choices:
+  - choiceText: Entendido. E quanto aos poderes mais complexos, as setas direcionais?
+    nextNode: {fileID: 11400000, guid: 77e7e1f145167ae498a226b4154bf3d4, type: 2}
+  - choiceText: "Q para impacto, E para supress\xE3o. Compreendido."
+    nextNode: {fileID: 11400000, guid: c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6, type: 2}
   onNodeEnter:
     m_PersistentCalls:
       m_Calls: []

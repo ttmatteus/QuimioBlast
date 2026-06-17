@@ -11,6 +11,8 @@ public class DiffindoAbility : AbilityBase
     [Header("Projétil")]
     public float velocidadeProjetil = 18f;
 
+    public override bool RequireAlvo => false;
+
     public override void Executar(CombatManager owner, Transform alvo)
     {
         if (prefabProjetil == null)
@@ -19,7 +21,17 @@ public class DiffindoAbility : AbilityBase
             return;
         }
 
-        Vector2 direcao = ((Vector2)alvo.position - (Vector2)owner.transform.position).normalized;
+        Vector2 direcao;
+        if (alvo != null)
+            direcao = ((Vector2)alvo.position - (Vector2)owner.transform.position).normalized;
+        else
+        {
+            Camera cam = Camera.main;
+            if (cam == null) return;
+            Vector2 mouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
+            direcao = (mouseWorld - (Vector2)owner.transform.position).normalized;
+            if (direcao.magnitude < 0.01f) direcao = Vector2.right;
+        }
 
         GameObject obj  = Object.Instantiate(prefabProjetil, owner.transform.position, Quaternion.identity);
         Projectile2D proj = obj.GetComponent<Projectile2D>();

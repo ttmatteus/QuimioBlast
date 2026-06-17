@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
   m_Name: Leo_No1
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
-  speakerName: Leo
-  dialogueText: "Um rosto novo? Voc\xEA veio de fora, n\xE3o \xE9? Espero que n\xE3o
-    esteja aqui pra nos matar."
+  speakerName: Leonardo
+  dialogueText: "Ora, veja o que os ponteiros da hist\xF3ria nos trouxeram... O\
+    \ aut\xF4mato da profecia. Olhe para voc\xEA, t\xE3o limpo, t\xE3o otimizado.\
+    \ Enquanto n\xF3s... (ele aponta para suas pr\xF3prias deformidades corporais)...\
+    \ bem, n\xF3s somos o que sobrou de uma compila\xE7\xE3o mal-sucedida. Carne\
+    \ e c\xF3digo misturados em um erro de segmenta\xE7\xE3o cr\xF4nico."
   choices:
-  - choiceText: "Busco apenas eliminar os que forem necess\xE1rios."
+  - choiceText: "O que aconteceu com voc\xEAs? O que causou essa destrui\xE7\xE3o?"
     nextNode: {fileID: 11400000, guid: ad4058256d67eda4d97ec5bd3ce7a911, type: 2}
-  - choiceText: "S\xF3 n\xE3o me d\xEAem motivos."
+  - choiceText: "O que s\xE3o essas subst\xE2ncias brilhantes que voc\xEA est\xE1\
+      \ destilando?"
     nextNode: {fileID: 11400000, guid: 8e7356d6e813d414f8744b72b53ccb66, type: 2}
   onNodeEnter:
     m_PersistentCalls:

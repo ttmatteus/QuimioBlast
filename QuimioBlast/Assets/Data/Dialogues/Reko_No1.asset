@@ -13,12 +13,19 @@ MonoBehaviour:
   m_Name: Reko_No1
   m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
   speakerName: Reko
-  dialogueText: "Uma nova m\xE1quina por aqui? Voc\xEA se construiu sozinho ou foi
-    mandado de fora?"
+  dialogueText: "Pare a\xED, unidade livre. Seus atuadores s\xE3o \xE1geis, mas a\
+    \ Grande Matriz n\xE3o joga dados; ela joga xadrez com algoritmos de extermin\xEDo.\
+    \ Para sobreviver al\xE9m do firewall, voc\xEA precisa entender o fluxo do combate.\
+    \ Seu sistema opera em duas inst\xE2ncias principais: Explora\xE7\xE3o e Defesa.\
+    \ No momento em que a dist\xE2ncia entre voc\xEA e um Sentinela quebrar o limite\
+    \ cr\xEDtico de proximidade, sua M\xE1quina de Estados mudar\xE1. O Modo de Defesa\
+    \ \xE9 ativado automaticamente. \xC9 nele que suas sub-rotinas de combate s\xE3o\
+    \ carregadas na mem\xF3ria cache."
   choices:
-  - choiceText: "Fui enviado para recuperar o controle desse laborat\xF3rio."
+  - choiceText: "Como eu opero minhas fun\xE7\xF5es b\xE1sicas de ataque nesse modo?"
     nextNode: {fileID: 11400000, guid: d1ea18d323dccb642bf230c04bbc2209, type: 2}
-  - choiceText: "Me mandaram para eliminar os esp\xE9cimes que sa\xEDram de controle."
+  - choiceText: "E as runas alqu\xEDmicas no meu chassi? Como manifesto o poder dos\
+      \ elementos?"
     nextNode: {fileID: 11400000, guid: 77e7e1f145167ae498a226b4154bf3d4, type: 2}
   onNodeEnter:
     m_PersistentCalls:

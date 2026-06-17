@@ -10,22 +10,22 @@ using System.Collections.Generic;
 //   2. Ajuste "Raio Deteccao Inimigos" para cobrir o alcance máximo de busca.
 //
 // Mapeamento de teclas:
-//   - Botão Direito do Mouse → Melee
-//   - E                      → Disparo de Energia
-//   - 1                      → Incêndio (AoE)
-//   - 2                      → Diffindo
-//   - 3                      → Accio (puxa inimigo)
-//   - 4                      → Depulso (empurra inimigo)
+//   - Q                → Ataque Melee
+//   - E                → Disparo de Energia
+//   - Seta Esquerda    → Confringo
+//   - Seta Direita     → Diffindo
+//   - Seta Baixo       → Accio (puxa inimigo)
+//   - Seta Cima        → Depulso (empurra inimigo)
 
 public class CombatManager : MonoBehaviour
 {
     [Header("Habilidades")]
-    public AbilityBase habilidadeMelee;    // Botão Direito do Mouse
-    public AbilityBase habilidadeEnergia;  // E
-    public AbilityBase habilidadeIncendio; // 1
-    public AbilityBase habilidadeDiffindo; // 2
-    public AbilityBase habilidadeAccio;    // 3
-    public AbilityBase habilidadeDepulso;  // 4
+    public AbilityBase habilidadeMelee;     // Q
+    public AbilityBase habilidadeEnergia;   // E
+    public AbilityBase habilidadeConfringo; // Seta Esquerda
+    public AbilityBase habilidadeDiffindo;  // Seta Direita
+    public AbilityBase habilidadeAccio;     // Seta Baixo
+    public AbilityBase habilidadeDepulso;   // Seta Cima
 
     [Header("Detecção de Inimigos")]
     [Tooltip("Raio máximo de busca por inimigos ao usar qualquer habilidade.")]
@@ -35,6 +35,12 @@ public class CombatManager : MonoBehaviour
     public bool mostrarGizmos = true;
 
     // ── internos ──────────────────────────────────────────────────────────────
+    // Bool "Atacando" no Animator: enquanto verdadeiro, as transições de
+    // movimento ("Estado") não interrompem a animação do golpe. Volta para
+    // falso via FinalizarAtaque(), chamado por um Animation Event no último
+    // frame de cada clipe de ataque (Soco, Tiro, Accio, Depulso, Diffindo, Confringo).
+    private static readonly int ParamAtacando = Animator.StringToHash("Atacando");
+
     private Dictionary<AbilityBase, float> cooldowns = new Dictionary<AbilityBase, float>();
     private Animator  animator;
     private Camera    cam;
@@ -86,12 +92,12 @@ public class CombatManager : MonoBehaviour
 
     private void LerInputs()
     {
-        if (Input.GetMouseButtonDown(1))           TentarExecutar(habilidadeMelee);
-        if (Input.GetKeyDown(KeyCode.E))           TentarExecutar(habilidadeEnergia);
-        if (Input.GetKeyDown(KeyCode.Alpha1))      TentarExecutar(habilidadeIncendio);
-        if (Input.GetKeyDown(KeyCode.Alpha2))      TentarExecutar(habilidadeDiffindo);
-        if (Input.GetKeyDown(KeyCode.Alpha3))      TentarExecutar(habilidadeAccio);
-        if (Input.GetKeyDown(KeyCode.Alpha4))      TentarExecutar(habilidadeDepulso);
+        if (Input.GetKeyDown(KeyCode.Q))         TentarExecutar(habilidadeMelee);
+        if (Input.GetKeyDown(KeyCode.E))         TentarExecutar(habilidadeEnergia);
+        if (Input.GetKeyDown(KeyCode.LeftArrow))  TentarExecutar(habilidadeConfringo);
+        if (Input.GetKeyDown(KeyCode.RightArrow)) TentarExecutar(habilidadeDiffindo);
+        if (Input.GetKeyDown(KeyCode.DownArrow))  TentarExecutar(habilidadeAccio);
+        if (Input.GetKeyDown(KeyCode.UpArrow))    TentarExecutar(habilidadeDepulso);
     }
 
     private void TentarExecutar(AbilityBase habilidade)
@@ -104,15 +110,20 @@ public class CombatManager : MonoBehaviour
             return;
         }
 
-        if (alvoAtual == null)
+        if (alvoAtual == null && habilidade.RequireAlvo)
         {
             Debug.Log("[Combate] Nenhum inimigo dentro do raio de detecção na direção atual.");
             return;
         }
 
+        Transform alvoTransform = alvoAtual != null ? alvoAtual.transform : null;
+
+        if (!habilidade.PodeExecutar(this, alvoTransform))
+            return;
+
         cooldowns[habilidade] = habilidade.cooldown;
         DispararAnimacao(habilidade.parametroAnimacao);
-        habilidade.Executar(this, alvoAtual.transform);
+        habilidade.Executar(this, alvoTransform);
     }
 
     // Encontra o inimigo alvo: prioriza o mais próximo na direção que o cursor aponta.
@@ -174,6 +185,7 @@ public class CombatManager : MonoBehaviour
     private void DispararAnimacao(string parametro)
     {
         if (animator == null || string.IsNullOrEmpty(parametro)) return;
+        animator.SetBool(ParamAtacando, true);
         animator.SetTrigger(parametro);
     }
 

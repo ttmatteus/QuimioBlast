@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87be9cb2b2219d54ea59d2993fbc04db, type: 3}
+  m_Name: ALI_No1_2_Pecas
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::DialogueNode
+  speakerName: ALI
+  dialogueText: "O C\xF3digo Primordial foi fragmentado em quatro n\xF3s cr\xEDticos de dados, guardados pelos quatro Generais da Matriz. Eles representam as estruturas fundamentais da antiga Terra: Solo, Atmosfera, \xC1gua e a pr\xF3pria Consci\xEAncia. Sem coletar essas quatro vari\xE1veis e pass\xE1-las como par\xE2metros para o seu script, a biosfera permanecer\xE1 em um loop infinito de entropia e morte."
+  choices:
+  - choiceText: "E como eu executo esse c\xF3digo ap\xF3s coletar as pe\xE7as?"
+    nextNode: {fileID: 11400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
+  - choiceText: "Ent\xE3o a jornada \xE9 uma busca por heran\xE7a. Eu irei."
+    nextNode: {fileID: 11400000, guid: c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8, type: 2}
+  onNodeEnter:
+    m_PersistentCalls:
+      m_Calls: []

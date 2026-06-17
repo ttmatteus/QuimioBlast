@@ -25,6 +25,11 @@ using System.Collections;
 // EFEITOS TEMPORÁRIOS (chamados pelo InventoryManager):
 //   • AumentarVelocidade — aumenta velocidadeBase do PlayerMovement2D.
 //   • AtivarInvisibilidade — ativa flag que os inimigos checam para parar de perseguir.
+//
+// MORTE / GAME OVER:
+//   • Ao zerar a vida, desativa PlayerMovement2D e CombatManager e chama
+//     GameOverUI.Instancia.Mostrar(). Veja GameOverUI.cs para configurar
+//     a tela de Game Over (Canvas, Panel e botões).
 // ─────────────────────────────────────────────────────────────────────────────
 
 [RequireComponent(typeof(Collider2D))]
@@ -58,6 +63,7 @@ public class PlayerHealth : MonoBehaviour
     public System.Action OnMorreu;
 
     private bool estaImune = false;
+    private bool estaMorto = false;
     private bool velocidadeAumentada = false;
     private PlayerMovement2D movimento;
     private Camera camPrincipal;
@@ -105,27 +111,22 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>Aplica dano ao Player. Ignora se estiver imune ou já morto.</summary>
     public void ReceberDano(float quantidade)
     {
-        if (estaImune || vidaAtual <= 0f) return;
+        if (estaImune || estaMorto) return;
 
         vidaAtual = Mathf.Max(0f, vidaAtual - quantidade);
         AtualizarSlider();
         OnVidaMudou?.Invoke(vidaAtual, vidaMaxima);
 
         if (vidaAtual <= 0f)
-        {
-            OnMorreu?.Invoke();
-            Debug.Log("[PlayerHealth] O Player morreu.");
-        }
+            Morrer();
         else
-        {
             StartCoroutine(CorotinImunidade());
-        }
     }
 
     /// <summary>Cura uma quantidade fixa, respeitando o limite máximo.</summary>
     public void Curar(float quantidade)
     {
-        if (vidaAtual >= vidaMaxima) return;
+        if (estaMorto || vidaAtual >= vidaMaxima) return;
         vidaAtual = Mathf.Min(vidaMaxima, vidaAtual + quantidade);
         AtualizarSlider();
         OnVidaMudou?.Invoke(vidaAtual, vidaMaxima);
@@ -134,10 +135,35 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>Restaura toda a vida. Bloqueado se já estiver com vida cheia.</summary>
     public void CurarTotal()
     {
-        if (vidaAtual >= vidaMaxima) return;
+        if (estaMorto || vidaAtual >= vidaMaxima) return;
         vidaAtual = vidaMaxima;
         AtualizarSlider();
         OnVidaMudou?.Invoke(vidaAtual, vidaMaxima);
+    }
+
+    /// <summary>
+    /// Chamado quando a vida chega a 0. Trava o Player (movimento e combate)
+    /// e exibe a tela de Game Over.
+    /// </summary>
+    private void Morrer()
+    {
+        estaMorto = true;
+        OnMorreu?.Invoke();
+        Debug.Log("[PlayerHealth] O Player morreu.");
+
+        if (movimento != null)
+        {
+            movimento.PararMovimento();
+            movimento.enabled = false;
+        }
+
+        CombatManager combate = GetComponent<CombatManager>();
+        if (combate != null) combate.enabled = false;
+
+        if (GameOverUI.Instancia != null)
+            GameOverUI.Instancia.Mostrar();
+        else
+            Debug.LogWarning("[PlayerHealth] GameOverUI não encontrado na cena.");
     }
 
     // ── efeitos temporários (usados pelo ItemData) ────────────────────────────
