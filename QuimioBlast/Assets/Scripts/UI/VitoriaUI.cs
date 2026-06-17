@@ -39,6 +39,7 @@ public class VitoriaUI : MonoBehaviour
 
     public void VoltarAoMenu()
     {
+        Time.timeScale = 1f;
         DestruirPlayerPersistente();
         SceneTransition.Instance.LoadScene(cenaMenuPrincipal);
     }
